@@ -111,6 +111,9 @@ const Header = () => {
             <ul
               className="
               text-main
+              bg-white
+              relative
+              z-10
               md:hidden
               "
             >
