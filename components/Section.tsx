@@ -1,19 +1,23 @@
-'use client'
+"use client";
 
-import React from 'react';
-import Carousel from './Carousel';
-import { SlideData } from '@/app/types/slide_data';
+import React, { useRef, useState } from "react";
+import Carousel from "./Carousel";
+import { SlideData } from "@/app/types/slide_data";
+import Title from "./Title";
 
-interface sectionProps
-{
-  data : SlideData[]
+interface sectionProps {
+  data: SlideData[];
+  title: string;
+  classname: string;
+  breakpoints: any
+  height: any
 }
 
-const Section:React.FC<sectionProps> = ({data}) => {
+const Section: React.FC<sectionProps> = ({ data, title, classname,breakpoints,height}) => {
   return (
     <div>
-      
-      <Carousel data = {data}/>
+      <Title title={title} />
+      <Carousel data={data} classname={classname} breakpoints={breakpoints}  height={height}/>
     </div>
   );
 };

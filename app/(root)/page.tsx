@@ -3,63 +3,147 @@
 import Slide from "@/components/Slide";
 import Section from "@/components/Section";
 import { SlideData } from "../types/slide_data";
+import Trailer from "@/components/Trailer";
 
 
 
 export default function Home() {
-  const data: SlideData[] = [
+  const dataWhatNews: SlideData[] = [
     {
+      id:1,
       url: "/images/wn-1.jpg",
       title: "Streaming Now!",
       desc: "MASHLE: MAGIC AND MUSCLES",
       link: 'https://mashleanime.com/'
     },
     {
+      id:2,
       url: "/images/wn-2.jpg",
       title: "Streaming Now!",
       desc: "Rurouni Kenshin",
       link: 'https://mashleanime.com/'
     },
     {
+      id:3,
       url: "/images/wn-3.jpg",
       title: "Streaming Now!",
       desc: "My Love Story with Yamada-kun at Lv999",
       link: 'https://mashleanime.com/'
     },
     {
+      id:4,
       url: "/images/wn-4.jpg",
       title: "Coming to Theaters February 2023",
       desc: "Sword Art Online the Movie -Progressive- Scherzo of Deep Night",
       link: 'https://mashleanime.com/'
     },
     {
+      id:5,
       url: "/images/hero2.jpg",
       title: "1",
       desc: "1",
       link: 'https://mashleanime.com/'
     },
     {
+      id:6,
       url: "/images/hero2.jpg",
       title: "1",
       desc: "1",
       link: 'https://mashleanime.com/'
-    },
-    // {
-    //   url: "/images/hero2.jpg",
-    //   title: "1",
-    //   desc: "1",
-    // },
-    // {
-    //   url: "/images/hero2.jpg",
-    //   title: "1",
-    //   desc: "1",
-    // },
-    // {
-    //   url: "/images/hero2.jpg",
-    //   title: "1",
-    //   desc: "1",
-    // },
+    }
   ];
+  const dataAniplex: SlideData[] = [
+    {
+      id:1,
+      url: "/images/an1.png",
+      title: "Demon Slayer: Kimetsu no Yaiba",
+      desc: "Mitsuri Kanroji 1/8 Scale Figure",
+      link: 'https://mashleanime.com/'
+    },
+    {
+      id:2,
+      url: "/images/an2.jpg",
+      title: "Kaguya-sama:Love Is War",
+      desc: " Ai Hayasaka Maid Swimsuit Ver. 1/7 Scale Figure",
+      link: 'https://mashleanime.com/'
+    },
+    {
+      id:3,
+      url: "/images/an3.jpg",
+      title: "Claynel",
+      desc: "Illyasviel von Einzbern loungewear Ver. 1/7 Scale Figure",
+      link: 'https://mashleanime.com/'
+    },
+    {
+      id:4,
+      url: "/images/an4.jpg",
+      title: "Claynel",
+      desc: "Rei Ayanami [VOYAGE END] 1/7 Scale Figure",
+      link: 'https://mashleanime.com/'
+    },
+    {
+      id:5,
+      url: "/images/an4.jpg",
+      title: "Claynel",
+      desc: "Rei Ayanami [VOYAGE END] 1/7 Scale Figure",
+      link: 'https://mashleanime.com/'
+    },
+    {
+      id:5,
+      url: "/images/an4.jpg",
+      title: "Claynel",
+      desc: "Rei Ayanami [VOYAGE END] 1/7 Scale Figure",
+      link: 'https://mashleanime.com/'
+    },
+  ];
+  const breakpoints1 = {
+    320: {
+      slidesPerView: 2,
+      spaceBetween: 10,
+      navigation:false
+    },
+    767: {
+      slidesPerView: 3,
+      spaceBetween: 20,
+      navigation:false
+    },
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 25,
+      navigation:true
+      
+    },
+    1280: {
+      slidesPerView: 4,
+      spaceBetween: 30,
+      navigation:true
+      
+    },
+  };
+  const breakpoints2 = {
+    320: {
+      slidesPerView: 1,
+      spaceBetween: 10,
+    },
+    540: 
+    {
+      slidesPerView: 2,
+      spaceBetween: 10,
+    },
+    767: {
+      slidesPerView: 3,
+      spaceBetween: 20,
+    },
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 25,
+      navigation:true
+    },
+    1280: {
+      slidesPerView: 4,
+      spaceBetween: 30,
+    },
+  };
   return (
     <div className="
     container
@@ -68,7 +152,9 @@ export default function Home() {
     px-4
     ">
       <Slide/>
-      <Section data={data}/>
+      <Section data={dataWhatNews} title="WHAT'S NEW?" classname="flex-col justify-start text-left" breakpoints={breakpoints1} height={'h-[600px]'}/>
+      <Section data={dataAniplex} title="ANIPLEX+" classname="flex-col-reverse justify-end text-center " breakpoints={breakpoints2} height={"h-[1000px] mb-[-200px] md:mb-[0px] md:h-[650px] "}/>
+      <Trailer/>
     </div>
   )
 }

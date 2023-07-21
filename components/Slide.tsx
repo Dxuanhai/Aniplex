@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from "react"
-import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs"
+import React, { useState, useEffect } from "react";
+import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 
 interface SlideProps {
-  url: string
+  url: string;
 }
 
 function Slide() {
@@ -27,26 +27,26 @@ function Slide() {
     {
       url: "/images/hero16.jpg",
     },
-  ]
+  ];
 
-  const [currentIndex, setCurrentIndex] = useState<number>(0)
-  const [intervalId, setIntervalId] = useState<number | null>(null)
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [intervalId, setIntervalId] = useState<number | null>(null);
 
   const prevSlide = () => {
-    const isFirstSlide = currentIndex === 0
-    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1
-    setCurrentIndex(newIndex)
-  }
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
 
   const nextSlide = () => {
-    const isLastSlide = currentIndex === slides.length - 1
-    const newIndex = isLastSlide ? 0 : currentIndex + 1
-    setCurrentIndex(newIndex)
-  }
+    const isLastSlide = currentIndex === slides.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
 
   const goToSlide = (slideIndex: number) => {
-    setCurrentIndex(slideIndex)
-  }
+    setCurrentIndex(slideIndex);
+  };
 
   return (
     <div className="max-w-[1400px]  h-[330px] md:h-[460px] xl:h-[680px] w-full m-auto py-16 px-4 relative group">
@@ -83,7 +83,7 @@ function Slide() {
         <BsChevronCompactRight onClick={nextSlide} size={30} />
       </div>
     </div>
-  )
+  );
 }
 
-export default Slide
+export default Slide;
