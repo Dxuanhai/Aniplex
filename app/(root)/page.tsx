@@ -161,6 +161,7 @@ export default function Home() {
       <Trailer/>
       <Section data={dataWhatNews} title="PRE-ORDER & NEW RELEASES" classname="flex-col-reverse justify-end text-left" breakpoints={breakpoints1} height={'h-[600px]'}/>
       <Information/>
+      
     </div>
   )
 }
