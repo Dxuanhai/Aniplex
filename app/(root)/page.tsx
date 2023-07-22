@@ -4,6 +4,7 @@ import Slide from "@/components/Slide";
 import Section from "@/components/Section";
 import { SlideData } from "../types/slide_data";
 import Trailer from "@/components/Trailer";
+import Information from "@/components/Information";
 
 
 
@@ -159,6 +160,7 @@ export default function Home() {
       <Section data={dataAniplex} title="ANIPLEX+" classname="flex-col-reverse justify-end text-center " breakpoints={breakpoints2} height={"h-[1000px] mb-[-200px] md:mb-[0px] md:h-[650px] "}/>
       <Trailer/>
       <Section data={dataWhatNews} title="PRE-ORDER & NEW RELEASES" classname="flex-col-reverse justify-end text-left" breakpoints={breakpoints1} height={'h-[600px]'}/>
+      <Information/>
     </div>
   )
 }
