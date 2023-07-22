@@ -89,7 +89,6 @@ const Trailer = () => {
     <div className="py-4">
       <Title title='TRAILERS'/>
       <div className="relative ">
-        {! isPlaying && (
           <Swiper
           breakpoints={breakpoints1}
           spaceBetween={20}
@@ -97,8 +96,7 @@ const Trailer = () => {
           pagination={{clickable: true}}
           modules={[Autoplay, Pagination, Navigation]}
           slidesPerView={4}
-          className="mySwiper
-        "
+          className={`mySwiper ${ isPlaying? 'opacity-0 h-[260px] sm:h-[330px] md:h-[460px] lg:h-[580px] xl:h-[700px]': ''}`}
         >
           {TrailerData.map(item => (
             <SwiperSlide key={item.id} className={` h-[270px] sm:h-[300px] lg:h-[340px] flex flex-col gap-y-3 `}>
@@ -125,7 +123,7 @@ const Trailer = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        )}
+  
         {isPlaying && (
           <>
             <AiOutlineClose size={48} className='absolute cursor-pointer right-0 -top-14' onClick={handlePause}/>
