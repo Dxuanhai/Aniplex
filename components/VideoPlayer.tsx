@@ -20,9 +20,9 @@ const VideoPlayer: React.FC<videoProps> = ({ videoId}) => {
   };
 
   return (
-      <div className='absolute left-0 top-0 w-full h-[260px] sm:h-[330px] md:h-[460px] lg:h-[580px] xl:h-[700px]  flex justify-center items-center z-10'>
+      <div className='absolute left-0 top-0 w-full h-[260px] sm:h-[330px] md:h-[460px] lg:h-[450px]  xl:h-[560px]  flex justify-center items-center z-10'>
         
-        <YouTube videoId={videoId} opts={opts}  className='w-full h-full'  />
+        <YouTube videoId={videoId} opts={opts}  className='w-full h-full xl:w-[80%] lg:w-[80%]'  />
       </div>
   );
 };

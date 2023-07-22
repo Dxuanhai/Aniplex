@@ -53,7 +53,7 @@ const Header = () => {
           <Brand />
         </div>
       </div>
-      <div className={`bg-white w-full h-[100px] ${isFixed ? 'fixed top-0 z-10 h-[60px] ' : ''} border-b-2  transition-all`}>
+      <div className={`bg-white w-full h-[100px] ${isFixed ? 'fixed top-0 z-[100] h-[60px] ' : ''} border-b-2  transition-all`}>
         <div
           className="
             container
