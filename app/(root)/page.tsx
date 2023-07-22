@@ -100,23 +100,22 @@ export default function Home() {
     320: {
       slidesPerView: 2,
       spaceBetween: 10,
-      navigation:false
     },
     767: {
       slidesPerView: 3,
       spaceBetween: 20,
-      navigation:false
+
     },
     1024: {
       slidesPerView: 3,
       spaceBetween: 25,
-      navigation:true
+
       
     },
     1280: {
       slidesPerView: 4,
       spaceBetween: 30,
-      navigation:true
+
       
     },
   };
@@ -124,24 +123,28 @@ export default function Home() {
     320: {
       slidesPerView: 1,
       spaceBetween: 10,
+      
     },
     540: 
     {
       slidesPerView: 2,
       spaceBetween: 10,
+      
     },
     767: {
       slidesPerView: 3,
       spaceBetween: 20,
+      
     },
     1024: {
       slidesPerView: 3,
       spaceBetween: 25,
-      navigation:true
+      
     },
     1280: {
       slidesPerView: 4,
       spaceBetween: 30,
+      
     },
   };
   return (
@@ -155,6 +158,7 @@ export default function Home() {
       <Section data={dataWhatNews} title="WHAT'S NEW?" classname="flex-col justify-start text-left" breakpoints={breakpoints1} height={'h-[600px]'}/>
       <Section data={dataAniplex} title="ANIPLEX+" classname="flex-col-reverse justify-end text-center " breakpoints={breakpoints2} height={"h-[1000px] mb-[-200px] md:mb-[0px] md:h-[650px] "}/>
       <Trailer/>
+      <Section data={dataWhatNews} title="PRE-ORDER & NEW RELEASES" classname="flex-col-reverse justify-end text-left" breakpoints={breakpoints1} height={'h-[600px]'}/>
     </div>
   )
 }

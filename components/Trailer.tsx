@@ -6,8 +6,9 @@ import { TrailerType } from '@/app/types/slide_data';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
+import 'swiper/css/pagination';
 import "../app/globals.css";
-import { Navigation } from "swiper/modules";
+import { Navigation,Pagination, Autoplay } from "swiper/modules";
 import {AiOutlineClose} from 'react-icons/ai'
 
 const Trailer = () => {
@@ -86,13 +87,15 @@ const Trailer = () => {
   };
   return (
     <div className="py-4">
-      <Title title='Trailer'/>
+      <Title title='TRAILERS'/>
       <div className="relative ">
         {! isPlaying && (
           <Swiper
           breakpoints={breakpoints1}
           spaceBetween={20}
-          modules={[Navigation]}
+          autoplay={{delay: 6500, disableOnInteraction: false}}
+          pagination={{clickable: true}}
+          modules={[Autoplay, Pagination, Navigation]}
           slidesPerView={4}
           className="mySwiper
         "
