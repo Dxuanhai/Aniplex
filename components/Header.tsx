@@ -28,7 +28,7 @@ const Header = () => {
   const ShowMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  console.log(isMenuOpen);
+
   return (
     <div
       className="

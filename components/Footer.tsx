@@ -9,7 +9,7 @@ import {
 const Footer = () => {
   return (
     <div className="bg-[#333333] text-[#FFFFFF40] py-[50px] ">
-      <div className=" container mx-auto 2xl:w-[1280px]">
+      <div className=" container mx-auto 2xl:w-[1280px]  px-4">
         <div className=" flex">
           <div className="md:w-1/2 mx-auto text-center md:text-left">
             <h3 className="mb-2">© Aniplex of America Inc. All Rights Reserved.</h3>

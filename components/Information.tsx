@@ -74,7 +74,7 @@ const Information = () => {
           <ChildTitle icon = {<BsTwitter size={32}/>} title="Twitter" />
           <div 
           style={{backgroundImage: `url(/images/twitterIframe.png)`}}
-          className="bg-center bg-cover bg-no-repeat h-[360px] xl:h-[440px]">
+          className="bg-center bg-contain bg-no-repeat h-[360px] xl:h-[440px]">
 
           </div>
         </div>
