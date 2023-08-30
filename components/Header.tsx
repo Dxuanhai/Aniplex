@@ -103,7 +103,8 @@ const Header = () => {
                 <Link href="/shows">SHOWS</Link>
               </li>
               <li className="font-bold hover:text-pink-500 px-4 flex items-center justify-center  hover:border-b-[8px] hover:border-pink-500 h-full transition-all ">
-                <a href="https://store.aniplexusa.com/">SHOP</a>
+                {/* <a href="https://store.aniplexusa.com/">SHOP</a> */}
+                <Link href="/bt">SHOP</Link>
               </li>
             </ul>
           </div>
