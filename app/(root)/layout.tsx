@@ -1,12 +1,10 @@
-import Header from "@/components/Header";
 import "../globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Footer from "@/components/Footer";
+import Footer from "@/components/shared/Footer";
 import Scroll from "@/components/Scroll";
-
+import Header from "@/components/shared/Header";
 const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
   title: "Aniplex",
   description: "Aniplex",
@@ -19,11 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`} >
-        <Scroll/>
-        <Header/>
+      <body className={`${inter.className}`}>
+        <Scroll />
+        <Header />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
