@@ -1,114 +1,97 @@
-'use client'
+"use client";
 import Slide from "@/components/Slide";
 import Section from "@/components/Section";
 import { SlideData } from "../types/slide_data";
 import Trailer from "@/components/Trailer";
 import Information from "@/components/Information";
-import { useRouter } from "next/navigation";
-import { useEffect,useState } from 'react';
-
 
 export default function Home() {
-  const router = useRouter();
-  const [logged,setLogged] = useState(false)
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-  
-    if (!isLoggedIn) {
-      router.push('/auth/login');
-      setLogged(false) // Chuyển hướng đến trang đăng nhập
-    }else
-    {
-      setLogged(true) //
-    }
-  }, []);
-
   const dataWhatNews: SlideData[] = [
     {
-      id:1,
+      id: 1,
       url: "/images/wn-1.jpg",
       title: "Streaming Now!",
       desc: "MASHLE: MAGIC AND MUSCLES",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
     {
-      id:2,
+      id: 2,
       url: "/images/wn-2.jpg",
       title: "Streaming Now!",
       desc: "Rurouni Kenshin",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
     {
-      id:3,
+      id: 3,
       url: "/images/wn-3.jpg",
       title: "Streaming Now!",
       desc: "My Love Story with Yamada-kun at Lv999",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
     {
-      id:4,
+      id: 4,
       url: "/images/wn-4.jpg",
       title: "Coming to Theaters February 2023",
       desc: "Sword Art Online the Movie -Progressive- Scherzo of Deep Night",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
     {
-      id:5,
+      id: 5,
       url: "/images/hero2.jpg",
       title: "1",
       desc: "1",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
     {
-      id:6,
+      id: 6,
       url: "/images/hero2.jpg",
       title: "1",
       desc: "1",
-      link: 'https://mashleanime.com/'
-    }
+      link: "https://mashleanime.com/",
+    },
   ];
   const dataAniplex: SlideData[] = [
     {
-      id:1,
+      id: 1,
       url: "/images/an1.png",
       title: "Demon Slayer: Kimetsu no Yaiba",
       desc: "Mitsuri Kanroji 1/8 Scale Figure",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
     {
-      id:2,
+      id: 2,
       url: "/images/an2.jpg",
       title: "Kaguya-sama:Love Is War",
       desc: " Ai Hayasaka Maid Swimsuit Ver. 1/7 Scale Figure",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
     {
-      id:3,
+      id: 3,
       url: "/images/an3.jpg",
       title: "Claynel",
       desc: "Illyasviel von Einzbern loungewear Ver. 1/7 Scale Figure",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
     {
-      id:4,
+      id: 4,
       url: "/images/an4.jpg",
       title: "Claynel",
       desc: "Rei Ayanami [VOYAGE END] 1/7 Scale Figure",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
     {
-      id:5,
+      id: 5,
       url: "/images/an4.jpg",
       title: "Claynel",
       desc: "Rei Ayanami [VOYAGE END] 1/7 Scale Figure",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
     {
-      id:5,
+      id: 5,
       url: "/images/an4.jpg",
       title: "Claynel",
       desc: "Rei Ayanami [VOYAGE END] 1/7 Scale Figure",
-      link: 'https://mashleanime.com/'
+      link: "https://mashleanime.com/",
     },
   ];
   const breakpoints1 = {
@@ -119,53 +102,40 @@ export default function Home() {
     767: {
       slidesPerView: 3,
       spaceBetween: 20,
-
     },
     1024: {
       slidesPerView: 3,
       spaceBetween: 25,
-
-      
     },
     1280: {
       slidesPerView: 4,
       spaceBetween: 30,
-
-      
     },
   };
   const breakpoints2 = {
     320: {
       slidesPerView: 1,
       spaceBetween: 10,
-      
     },
-    540: 
-    {
+    540: {
       slidesPerView: 2,
       spaceBetween: 10,
-      
     },
     767: {
       slidesPerView: 3,
       spaceBetween: 20,
-      
     },
     1024: {
       slidesPerView: 3,
       spaceBetween: 25,
-      
     },
     1280: {
       slidesPerView: 4,
       spaceBetween: 30,
-      
     },
   };
   return (
-  
     <div className="container mx-auto 2xl:w-[1280px] px-4">
-    {logged ? (
       <>
         <Slide />
         <Section
@@ -173,14 +143,14 @@ export default function Home() {
           title="WHAT'S NEW?"
           classname="flex-col justify-start text-left"
           breakpoints={breakpoints1}
-          height={'h-[600px]'}
+          height={"h-[600px]"}
         />
         <Section
           data={dataAniplex}
           title="ANIPLEX+"
           classname="flex-col-reverse justify-end text-center"
           breakpoints={breakpoints2}
-          height={'h-[1000px] mb-[-200px] md:mb-[0px] md:h-[650px]'}
+          height={"h-[1000px] mb-[-200px] md:mb-[0px] md:h-[650px]"}
         />
         <Trailer />
         <Section
@@ -188,15 +158,10 @@ export default function Home() {
           title="PRE-ORDER & NEW RELEASES"
           classname="flex-col-reverse justify-end text-left"
           breakpoints={breakpoints1}
-          height={'h-[600px]'}
+          height={"h-[600px]"}
         />
         <Information />
       </>
-    ) : (
-     <div className="flex items-center justify-center">....</div>
-    )}
-  </div>
-
-   
-  )
+    </div>
+  );
 }
