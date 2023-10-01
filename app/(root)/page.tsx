@@ -1,14 +1,28 @@
-
-
+'use client'
 import Slide from "@/components/Slide";
 import Section from "@/components/Section";
 import { SlideData } from "../types/slide_data";
 import Trailer from "@/components/Trailer";
 import Information from "@/components/Information";
-
+import { useRouter } from "next/navigation";
+import { useEffect,useState } from 'react';
 
 
 export default function Home() {
+  const router = useRouter();
+  const [logged,setLogged] = useState(false)
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+  
+    if (!isLoggedIn) {
+      router.push('/auth/login');
+      setLogged(false) // Chuyển hướng đến trang đăng nhập
+    }else
+    {
+      setLogged(true) //
+    }
+  }, []);
+
   const dataWhatNews: SlideData[] = [
     {
       id:1,
@@ -149,19 +163,40 @@ export default function Home() {
     },
   };
   return (
-    <div className="
-    container
-    mx-auto
-    2xl:w-[1280px]
-    px-4
-    ">
-      <Slide/>
-      <Section data={dataWhatNews} title="WHAT'S NEW?" classname="flex-col justify-start text-left" breakpoints={breakpoints1} height={'h-[600px]'}/>
-      <Section data={dataAniplex} title="ANIPLEX+" classname="flex-col-reverse justify-end text-center " breakpoints={breakpoints2} height={"h-[1000px] mb-[-200px] md:mb-[0px] md:h-[650px] "}/>
-      <Trailer/>
-      <Section data={dataWhatNews} title="PRE-ORDER & NEW RELEASES" classname="flex-col-reverse justify-end text-left" breakpoints={breakpoints1} height={'h-[600px]'}/>
-      <Information/>
-      
-    </div>
+  
+    <div className="container mx-auto 2xl:w-[1280px] px-4">
+    {logged ? (
+      <>
+        <Slide />
+        <Section
+          data={dataWhatNews}
+          title="WHAT'S NEW?"
+          classname="flex-col justify-start text-left"
+          breakpoints={breakpoints1}
+          height={'h-[600px]'}
+        />
+        <Section
+          data={dataAniplex}
+          title="ANIPLEX+"
+          classname="flex-col-reverse justify-end text-center"
+          breakpoints={breakpoints2}
+          height={'h-[1000px] mb-[-200px] md:mb-[0px] md:h-[650px]'}
+        />
+        <Trailer />
+        <Section
+          data={dataWhatNews}
+          title="PRE-ORDER & NEW RELEASES"
+          classname="flex-col-reverse justify-end text-left"
+          breakpoints={breakpoints1}
+          height={'h-[600px]'}
+        />
+        <Information />
+      </>
+    ) : (
+     <div className="flex items-center justify-center">....</div>
+    )}
+  </div>
+
+   
   )
 }

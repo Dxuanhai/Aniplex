@@ -1,12 +1,40 @@
+"use client";
 import Link from "next/link";
 import React from "react";
+import { useForm, type FieldValues, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  IsignUpSchema,
+  signInSchema,
+  IsignInSchema,
+  signUpSchema,
+} from "@/lib/validations/auth";
 
-const page = () => {
+interface Props {
+  login: boolean;
+}
+
+const Authform = ({ login }: Props) => {
+  const formSchema = login ? signInSchema : signUpSchema;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitted },
+  } = useForm({
+    resolver: zodResolver(formSchema),
+  });
+
+  const onRegister = async (data: FieldValues) => {
+    console.log("register", data);
+  };
+  const onLogin = async (data: FieldValues) => {
+    console.log("login", data);
+  };
   return (
-    <div className="p-5 flex">
+    <div className="flex h-screen w-full">
       <div
         style={{ backgroundImage: `url('/images/yoiichi.png')` }}
-        className="md:w-1/2 xl:w-2/3 bg-center bg-no-repeat bg-cover"
+        className=" xl:w-2/3 bg-center bg-no-repeat bg-cover m-8"
       ></div>
       <div
         className="bg-white w-full md:max-w-md lg:max-w-full  md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
@@ -14,29 +42,55 @@ const page = () => {
       >
         <div className="w-full h-100">
           <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">
-            Log in to your account
+            {login ? "Log in to your account" : "Create a new account"}
           </h1>
-          <form className="mt-6" action="#" method="POST">
+          <form
+            className="mt-6"
+            onSubmit={handleSubmit(login ? onLogin : onRegister)}
+          >
             <div>
               <label className="block text-gray-700">Email Address</label>
               <input
+                {...register("email")}
                 type="email"
+                name="email"
                 placeholder="Enter Email Address"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-                required
               />
             </div>
+            {errors.email && (
+              <p className="text-red-500">{`${errors.email.message}`}</p>
+            )}
             <div className="mt-4">
               <label className="block text-gray-700">Password</label>
               <input
+                {...register("password")}
                 type="password"
+                name="password"
                 placeholder="Enter Password"
-                minLength={6}
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
           focus:bg-white focus:outline-none"
-                required
               />
             </div>
+            {errors.password && (
+              <p className="text-red-500">{`${errors.password.message}`}</p>
+            )}
+            {!login && (
+              <div className="mt-4">
+                <label className="block text-gray-700">Confirm password</label>
+                <input
+                  {...register("confirmPassword")}
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Enter Password"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+            focus:bg-white focus:outline-none"
+                />
+              </div>
+            )}
+            {errors.confirmPassword && (
+              <p className="text-red-500">{`${errors.confirmPassword.message}`}</p>
+            )}
             <div className="text-right mt-2">
               <a
                 href="#"
@@ -94,19 +148,21 @@ const page = () => {
               <span className="ml-4">Log in with Google</span>
             </div>
           </button>
-          <p className="mt-8">
-            Need an account?{" "}
-            <Link
-              href="/auth/register"
-              className="text-blue-500 hover:text-blue-700 font-semibold"
-            >
-              Create an account
-            </Link>
-          </p>
+          {login && (
+            <p className="mt-8">
+              Need an account?{" "}
+              <Link
+                href="/register"
+                className="text-blue-500 hover:text-blue-700 font-semibold"
+              >
+                Create an account
+              </Link>
+            </p>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default page;
+export default Authform;
