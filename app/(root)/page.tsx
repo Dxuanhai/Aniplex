@@ -1,4 +1,3 @@
-"use client";
 import Slide from "@/components/Slide";
 import Section from "@/components/Section";
 
