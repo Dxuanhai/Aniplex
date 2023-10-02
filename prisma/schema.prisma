@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -8,18 +8,45 @@ generator client {
 }
 
 model User {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  email   String   @unique
-  password String 
-  isAdmin Boolean
-  createdAt DateTime @default(now())
+  id    Int     @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  isAdmin   Boolean
+  createdAt DateTime  @default(now())
+
 }
-model WatchNews {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  urlImage   String   
-  title String 
-  desc Boolean
-  link String
-  createdAt DateTime @default(now())
+
+
+model Anime {
+  id        Int    @id @default(autoincrement())
+  type      String     // "TV","MOVIE","GAME","OTHER"
+  products Product[]
+  createdAt DateTime   @default(now())
 }
+
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  urlImage    String
+  title       String
+  desc        String?
+  link        String
+  type        String       // Loại product (ví dụ: "ANIME","TOY","BOX")
+  createdAt   DateTime     @default(now())
+  anime   Anime    @relation(fields: [animeId], references: [id])
+  animeId  Int
+
+}
+model Trailer {
+  id        Int   @id @default(autoincrement())
+  name      String
+  urlImage  String
+  title     String 
+  idVideo   String
+  createdAt DateTime  @default(now())
+}
+
+
+
+
 

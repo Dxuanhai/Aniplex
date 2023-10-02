@@ -43,6 +43,8 @@ const Authform = ({ login }: Props) => {
       .post("/api/auth/login", data)
       .then((res) => {
         if (res?.data) {
+          localStorage.setItem("userLogin", JSON.stringify(data.email));
+
           router.push("/");
         }
       })

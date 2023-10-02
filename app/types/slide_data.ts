@@ -1,19 +1,16 @@
-
-
 export interface SlideData {
-  id: number
+  id: number;
   url: string;
   title: string;
-  desc: string;
+  desc?: string;
+  status?: string;
   link: string;
 }
 
-export interface TrailerType
-{
-  id: number
+export interface TrailerType {
+  id: number;
   name: string;
-  idVideo: string
+  idVideo: string;
   urlImage: string;
   title: string;
-  
 }

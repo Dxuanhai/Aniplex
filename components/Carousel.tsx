@@ -50,9 +50,11 @@ const Carousel: React.FC<carouselProps> = ({
               ></div>
             </a>
             <div className={`h-[30%] flex  w-full gap-y-2 ${classname}`}>
-              <h3 className="text-[#888888] text-[14px]">{item.title}</h3>
+              <h3 className="text-[#888888] text-[14px]">
+                {item.desc || item.status}
+              </h3>
               <span className="text-lg font-bold text-[#444444]">
-                {item.desc}
+                {item.title}
               </span>
             </div>
           </SwiperSlide>
