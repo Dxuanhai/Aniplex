@@ -43,7 +43,7 @@ const Carousel: React.FC<carouselProps> = ({
             key={item.id}
             className={`  flex flex-col gap-y-3 pb-[80px]`}
           >
-            <a href={item.link} className="h-[70%] w-full">
+            <a href={item.link} className="h-[70%] w-full block">
               <div
                 className="h-full w-full bg-no-repeat bg-center bg-cover"
                 style={{ backgroundImage: `url(${item.url})` }}
