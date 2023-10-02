@@ -1,7 +1,7 @@
 import prisma from "../primasdb";
 import bcrypt from "bcrypt";
 
-export const getUser = async (userId: string) => {
+export const getUser = async (userId: number) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
