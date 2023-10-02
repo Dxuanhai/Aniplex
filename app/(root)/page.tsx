@@ -5,7 +5,10 @@ import { SlideData } from "../types/slide_data";
 import Trailer from "@/components/Trailer";
 import Information from "@/components/Information";
 
-export default function Home() {
+import { useRouter } from "next/navigation";
+
+export default async function Home() {
+  const router = useRouter();
   const dataWhatNews: SlideData[] = [
     {
       id: 1,

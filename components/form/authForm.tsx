@@ -1,21 +1,19 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, type FieldValues, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  IsignUpSchema,
-  signInSchema,
-  IsignInSchema,
-  signUpSchema,
-} from "@/lib/validations/auth";
-
+import { signInSchema, signUpSchema } from "../../app/libs/validations/auth";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 interface Props {
   login: boolean;
 }
 
 const Authform = ({ login }: Props) => {
   const formSchema = login ? signInSchema : signUpSchema;
+  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -25,10 +23,36 @@ const Authform = ({ login }: Props) => {
   });
 
   const onRegister = async (data: FieldValues) => {
-    console.log("register", data);
+    axios
+      .post("/api/auth/register", data)
+      .then((res) => {
+        if (res?.data) {
+          router.push("/login");
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        } else {
+          setErrorMessage("An error occurred during registration.");
+        }
+      });
   };
   const onLogin = async (data: FieldValues) => {
-    console.log("login", data);
+    axios
+      .post("/api/auth/login", data)
+      .then((res) => {
+        if (res?.data) {
+          router.push("/");
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        } else {
+          setErrorMessage("An error occurred during login.");
+        }
+      });
   };
   return (
     <div className="flex h-screen w-full">
@@ -104,8 +128,9 @@ const Authform = ({ login }: Props) => {
               className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
         px-4 py-3 mt-6"
             >
-              Log In
+              {login ? "Log In" : "Register"}
             </button>
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           </form>
           <hr className="my-6 border-gray-300 w-full" />
           <button
