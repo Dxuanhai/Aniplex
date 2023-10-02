@@ -143,14 +143,14 @@ export default function Home() {
           title="WHAT'S NEW?"
           classname="flex-col justify-start text-left"
           breakpoints={breakpoints1}
-          height={"h-[600px] !important"}
+          height={"h-[600px]"}
         />
         <Section
           data={dataAniplex}
           title="ANIPLEX+"
           classname="flex-col-reverse justify-end text-center"
           breakpoints={breakpoints2}
-          height={"h-[1000px] !important mb-[-200px] md:mb-[0px] md:h-[650px]"}
+          height={"h-[1000px] mb-[-200px] md:mb-[0px] md:h-[650px]"}
         />
         <Trailer />
         <Section
@@ -158,7 +158,7 @@ export default function Home() {
           title="PRE-ORDER & NEW RELEASES"
           classname="flex-col-reverse justify-end text-left"
           breakpoints={breakpoints1}
-          height={"h-[600px] !important]"}
+          height={"h-[600px]"}
         />
         <Information />
       </>

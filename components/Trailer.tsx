@@ -97,17 +97,14 @@ const Trailer = () => {
           pagination={{ clickable: true }}
           modules={[Autoplay, Pagination, Navigation]}
           slidesPerView={4}
-          className={`mySwiper ${
+          className={`mySwiper h-[270px] sm:h-[300px] lg:h-[340px] ${
             isPlaying
               ? "invisible h-[260px] sm:h-[330px] md:h-[460px] lg:h-[450px]  xl:h-[560px]"
               : ""
           }`}
         >
           {TrailerData.map((item) => (
-            <SwiperSlide
-              key={item.id}
-              className={` h-[270px]!important sm:h-[300px] lg:h-[340px] flex flex-col gap-y-3 `}
-            >
+            <SwiperSlide key={item.id} className={`  flex flex-col gap-y-3 `}>
               <div
                 className="h-[50%] w-full bg-no-repeat bg-center bg-cover cursor-pointer relative group "
                 style={{ backgroundImage: `url(${item.urlImage})` }}
