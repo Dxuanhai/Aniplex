@@ -7,10 +7,10 @@ interface Props {
   icon: IconType;
   size: number;
   classname?: string;
-  logout?: () => void;
+  Function: () => void;
 }
 
-const Scroll = ({ icon, size, classname, logout }: Props) => {
+const Scroll = ({ icon, size, classname, Function }: Props) => {
   const [isScroll, setIsScroll] = useState(false);
   useEffect(() => {
     function handleScroll() {
@@ -29,12 +29,13 @@ const Scroll = ({ icon, size, classname, logout }: Props) => {
   }, [isScroll]);
 
   const handleScrollTop = () => {
+    alert("Scroll");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <div
-      onClick={logout ? logout : handleScrollTop}
+      onClick={Function}
       className={twMerge(
         "transition-all",
         "w-[60px]",

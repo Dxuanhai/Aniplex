@@ -2,7 +2,7 @@
 
 import { BiLogOut, BiMenu, BiSolidUpArrowAlt } from "react-icons/bi";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Brand from "../Brand";
@@ -11,8 +11,7 @@ import Scroll from "../card/Scroll";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
-  const [logged, setLogged] = useState(true);
-
+  const router = useRouter();
   useEffect(() => {
     function handleScroll() {
       if (window.scrollY > 40) {
@@ -21,26 +20,34 @@ const Header = () => {
         setIsFixed(false);
       }
     }
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    console.log("is ", isLoggedIn);
-    if (isLoggedIn) {
-      console.log("is ", isLoggedIn);
-      setLogged(true);
-    }
-
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [logged]);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("userLogin");
+    router.push("/login");
+    return;
+  };
+
   const ShowMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
     <>
-      <Scroll icon={BiSolidUpArrowAlt} size={24} classname="bottom-[100px] " />
-      <Scroll icon={BiLogOut} size={24} />
+      <Scroll
+        icon={BiSolidUpArrowAlt}
+        size={24}
+        classname="bottom-[100px]"
+        Function={handleScrollTop}
+      />
+      <Scroll icon={BiLogOut} size={24} Function={handleLogout} />
       <div
         className="
         
@@ -114,26 +121,17 @@ const Header = () => {
                 h-full
                 "
               >
-                <li
-                  className={`font-bold hover:text-cyan-500 px-4 flex items-center justify-center  hover:border-b-[8px] hover:border-cyan-500 h-full transition-all ${
-                    !logged && "hidden"
-                  }`}
-                >
+                <li className="font-bold hover:text-cyan-500 px-4 flex items-center justify-center  hover:border-b-[8px] hover:border-cyan-500 h-full transition-all ">
                   <Link href="/">HOME</Link>
                 </li>
-                <li
-                  className={`font-bold hover:text-cyan-500 px-4 flex items-center justify-center  hover:border-b-[8px] hover:border-cyan-500 h-full transition-all ${
-                    !logged && "hidden"
-                  }`}
-                >
+                <li className="font-bold hover:text-cyan-500 px-4 flex items-center justify-center  hover:border-b-[8px] hover:border-cyan-500 h-full transition-all">
                   <Link href="/news">NEWS</Link>
                 </li>
                 <li className="font-bold hover:text-fuchsia-500 px-4 flex items-center justify-center  hover:border-b-[8px] hover:border-fuchsia-500 h-full transition-all ">
                   <Link href="/shows">SHOWS</Link>
                 </li>
                 <li className="font-bold hover:text-pink-500 px-4 flex items-center justify-center  hover:border-b-[8px] hover:border-pink-500 h-full transition-all ">
-                  {/* <a href="https://store.aniplexusa.com/">SHOP</a> */}
-                  <Link href="/bt">SHOP</Link>
+                  <Link href="https://store.aniplexusa.com/">SHOP</Link>
                 </li>
               </ul>
             </div>
