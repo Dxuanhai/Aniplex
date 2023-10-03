@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useForm, type FieldValues, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInSchema, signUpSchema } from "../../app/libs/validations/auth";
+import { signInSchema, signUpSchema } from "../../app/lib/validations/auth";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 interface Props {

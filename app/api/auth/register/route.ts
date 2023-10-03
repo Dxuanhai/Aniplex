@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createUser, checkUserExists } from "@/app/libs/actions/user.action";
+import { createUser, checkUserExists } from "@/app/lib/actions/user.action";
 
 export const POST = async (request: Request) => {
   try {
