@@ -25,6 +25,9 @@ module.exports = {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
       },
+      visibilityH: {
+        hidden: "hidden",
+      },
     },
   },
   plugins: [require("daisyui")],
