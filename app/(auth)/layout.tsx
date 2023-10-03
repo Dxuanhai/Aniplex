@@ -1,3 +1,4 @@
+import Authenticate from "@/components/shared/Authenticate";
 import "../globals.css";
 import { Inter } from "next/font/google";
 
@@ -9,7 +10,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>{children}</body>
+      <body className={`${inter.className}`}>
+        <Authenticate type={false}>{children}</Authenticate>
+      </body>
     </html>
   );
 }

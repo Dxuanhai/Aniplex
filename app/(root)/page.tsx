@@ -1,6 +1,6 @@
-"use client";
 import Slide from "@/components/Slide";
 import Section from "@/components/Section";
+
 import { SlideData } from "../types/slide_data";
 import Trailer from "@/components/Trailer";
 import Information from "@/components/Information";
@@ -10,43 +10,43 @@ export default function Home() {
     {
       id: 1,
       url: "/images/wn-1.jpg",
-      title: "Streaming Now!",
-      desc: "MASHLE: MAGIC AND MUSCLES",
+      status: "Streaming Now!",
+      title: "MASHLE: MAGIC AND MUSCLES",
       link: "https://mashleanime.com/",
     },
     {
       id: 2,
       url: "/images/wn-2.jpg",
-      title: "Streaming Now!",
-      desc: "Rurouni Kenshin",
+      status: "Streaming Now!",
+      title: "Rurouni Kenshin",
       link: "https://mashleanime.com/",
     },
     {
       id: 3,
       url: "/images/wn-3.jpg",
-      title: "Streaming Now!",
-      desc: "My Love Story with Yamada-kun at Lv999",
+      status: "Streaming Now!",
+      title: "My Love Story with Yamada-kun at Lv999",
       link: "https://mashleanime.com/",
     },
     {
       id: 4,
       url: "/images/wn-4.jpg",
-      title: "Coming to Theaters February 2023",
-      desc: "Sword Art Online the Movie -Progressive- Scherzo of Deep Night",
+      status: "Coming to Theaters February 2023",
+      title: "Sword Art Online the Movie -Progressive- Scherzo of Deep Night",
       link: "https://mashleanime.com/",
     },
     {
       id: 5,
       url: "/images/hero2.jpg",
+      status: "1",
       title: "1",
-      desc: "1",
       link: "https://mashleanime.com/",
     },
     {
       id: 6,
       url: "/images/hero2.jpg",
+      status: "1",
       title: "1",
-      desc: "1",
       link: "https://mashleanime.com/",
     },
   ];

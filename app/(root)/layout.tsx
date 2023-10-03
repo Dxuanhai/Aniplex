@@ -1,9 +1,11 @@
 import "../globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { cookies } from "next/headers";
 import Footer from "@/components/shared/Footer";
-import Scroll from "@/components/Scroll";
 import Header from "@/components/shared/Header";
+import Authenticate from "@/components/shared/Authenticate";
+
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Aniplex",
@@ -15,13 +17,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = cookies();
+  const isUserLogin = cookieStore.get("userLogin");
+
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <Scroll />
-        <Header />
-        {children}
-        <Footer />
+        <Authenticate type={true}>
+          <Header />
+          {children}
+          <Footer />
+        </Authenticate>
       </body>
     </html>
   );

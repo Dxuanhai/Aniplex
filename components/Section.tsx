@@ -9,15 +9,26 @@ interface sectionProps {
   data: SlideData[];
   title: string;
   classname: string;
-  breakpoints: any
-  height: any
+  breakpoints: any;
+  height: any;
 }
 
-const Section: React.FC<sectionProps> = ({ data, title, classname,breakpoints,height}) => {
+const Section: React.FC<sectionProps> = ({
+  data,
+  title,
+  classname,
+  breakpoints,
+  height,
+}) => {
   return (
     <div>
       <Title title={title} />
-      <Carousel data={data} classname={classname} breakpoints={breakpoints}  height={height}/>
+      <Carousel
+        data={data}
+        classname={classname}
+        breakpoints={breakpoints}
+        height={height}
+      />
     </div>
   );
 };

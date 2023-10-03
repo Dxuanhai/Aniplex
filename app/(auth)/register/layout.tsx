@@ -1,16 +1,12 @@
 export const metadata = {
-  title: 'Resgiter',
-  description: 'Create a account Aniplex',
-}
+  title: "ANIPLEX | Resgiter",
+  description: "Create a account Aniplex",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  return (
-    <>
-    {children}
-    </>
-  )
+  return <>{children}</>;
 }
