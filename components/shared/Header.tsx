@@ -47,7 +47,12 @@ const Header = () => {
         classname="bottom-[100px]"
         Function={handleScrollTop}
       />
-      <Scroll icon={BiLogOut} size={24} Function={handleLogout} />
+      <Scroll
+        icon={BiLogOut}
+        size={24}
+        Function={handleLogout}
+        classname="flex"
+      />
       <div
         className="
         

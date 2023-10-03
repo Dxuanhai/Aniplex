@@ -5,6 +5,8 @@ import { cookies } from "next/headers";
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
 import Authenticate from "@/components/shared/Authenticate";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -23,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <Authenticate type={true}>
-          <Header />
-          {children}
-          <Footer />
-        </Authenticate>
+        <Suspense fallback={<Loading />}>
+          <Authenticate type={true}>
+            <Header />
+            {children}
+            <Footer />
+          </Authenticate>
+        </Suspense>
       </body>
     </html>
   );
