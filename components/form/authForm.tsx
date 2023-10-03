@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useForm, type FieldValues, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, signUpSchema } from "../../app/lib/validations/auth";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+
 interface Props {
   login: boolean;
 }
@@ -13,24 +14,28 @@ interface Props {
 const Authform = ({ login }: Props) => {
   const formSchema = login ? signInSchema : signUpSchema;
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitted },
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(formSchema),
   });
 
   const onRegister = async (data: FieldValues) => {
+    setLoading(true);
     axios
       .post("/api/auth/register", data)
       .then((res) => {
+        setLoading(false);
         if (res?.data) {
           router.push("/login");
         }
       })
       .catch((error) => {
+        setLoading(false);
         if (error.response) {
           setErrorMessage(error.response.data.message);
         } else {
@@ -39,9 +44,11 @@ const Authform = ({ login }: Props) => {
       });
   };
   const onLogin = async (data: FieldValues) => {
+    setLoading(true);
     axios
       .post("/api/auth/login", data)
       .then((res) => {
+        setLoading(false);
         if (res?.data) {
           localStorage.setItem("userLogin", JSON.stringify(data.email));
 
@@ -49,6 +56,7 @@ const Authform = ({ login }: Props) => {
         }
       })
       .catch((error) => {
+        setLoading(false);
         if (error.response) {
           setErrorMessage(error.response.data.message);
         } else {
@@ -56,139 +64,161 @@ const Authform = ({ login }: Props) => {
         }
       });
   };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit(login ? onLogin : onRegister)();
+    }
+  };
   return (
-    <div className="flex h-screen w-full">
+    <>
+      {loading && (
+        <main className="w-full h-screen flex items-center justify-center absolute opacity-100">
+          <span className="loading loading-ring w-[10px]  text-pink-100  absolute"></span>
+          <span className="loading loading-ring w-[50px]  text-pink-200 absolute"></span>
+          <span className="loading loading-ring w-[100px]  text-pink-300 absolute"></span>
+          <span className="loading loading-ring w-[200px] text-pink-400 absolute "></span>
+          <span className="loading loading-ring hidden xl:block w-[400px] text-pink-500 absolute "></span>
+        </main>
+      )}
       <div
-        style={{ backgroundImage: `url('/images/yoiichi.png')` }}
-        className=" xl:w-2/3 bg-center bg-no-repeat bg-cover m-8"
-      ></div>
-      <div
-        className="bg-white w-full md:max-w-md lg:max-w-full  md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
-  flex items-center justify-center"
+        className={`flex h-screen w-full ${loading && "pointer-events-none"} `}
       >
-        <div className="w-full h-100">
-          <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">
-            {login ? "Log in to your account" : "Create a new account"}
-          </h1>
-          <form
-            className="mt-6"
-            onSubmit={handleSubmit(login ? onLogin : onRegister)}
-          >
-            <div>
-              <label className="block text-gray-700">Email Address</label>
-              <input
-                {...register("email")}
-                type="email"
-                name="email"
-                placeholder="Enter Email Address"
-                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-              />
-            </div>
-            {errors.email && (
-              <p className="text-red-500">{`${errors.email.message}`}</p>
-            )}
-            <div className="mt-4">
-              <label className="block text-gray-700">Password</label>
-              <input
-                {...register("password")}
-                type="password"
-                name="password"
-                placeholder="Enter Password"
-                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
-          focus:bg-white focus:outline-none"
-              />
-            </div>
-            {errors.password && (
-              <p className="text-red-500">{`${errors.password.message}`}</p>
-            )}
-            {!login && (
-              <div className="mt-4">
-                <label className="block text-gray-700">Confirm password</label>
+        <div
+          style={{
+            backgroundImage: `${
+              login
+                ? "url('/images/demonSlayer.jpg')"
+                : "url('/images/yourLieInApril.jpg')"
+            }`,
+          }}
+          className="hidden md:block md:w-2/3 bg-center bg-no-repeat bg-cover m-8"
+        ></div>
+        <div className="bg-white w-full md:max-w-md lg:max-w-full  md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12 flex items-center justify-center">
+          <div className="w-full h-100">
+            <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">
+              {login ? "Log in to your account" : "Create a new account"}
+            </h1>
+            <form
+              className="mt-6"
+              onSubmit={handleSubmit(login ? onLogin : onRegister)}
+            >
+              <div>
+                <label className="block text-gray-700">Email Address</label>
                 <input
-                  {...register("confirmPassword")}
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Enter Password"
-                  className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
-            focus:bg-white focus:outline-none"
+                  {...register("email")}
+                  type="email"
+                  name="email"
+                  placeholder="Enter Email Address"
+                  onKeyDown={handleKeyDown}
+                  className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                 />
               </div>
-            )}
-            {errors.confirmPassword && (
-              <p className="text-red-500">{`${errors.confirmPassword.message}`}</p>
-            )}
-            <div className="text-right mt-2">
-              <a
-                href="#"
-                className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700"
-              >
-                Forgot Password?
-              </a>
-            </div>
-            <button
-              type="submit"
-              className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
-        px-4 py-3 mt-6"
-            >
-              {login ? "Log In" : "Register"}
-            </button>
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-          </form>
-          <hr className="my-6 border-gray-300 w-full" />
-          <button
-            type="button"
-            className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
-          >
-            <div className="flex items-center justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlnsXlink="http://www.w3.org/1999/xlink"
-                className="w-6 h-6"
-                viewBox="0 0 48 48"
-              >
-                <defs>
-                  <path
-                    id="a"
-                    d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"
+              {errors.email && (
+                <p className="text-red-500">{`${errors.email.message}`}</p>
+              )}
+              <div className="mt-4">
+                <label className="block text-gray-700">Password</label>
+                <input
+                  {...register("password")}
+                  type="password"
+                  name="password"
+                  placeholder="Enter Password"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                />
+              </div>
+              {errors.password && (
+                <p className="text-red-500">{`${errors.password.message}`}</p>
+              )}
+              {!login && (
+                <div className="mt-4">
+                  <label className="block text-gray-700">
+                    Confirm password
+                  </label>
+                  <input
+                    {...register("confirmPassword")}
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Enter Password"
+                    className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+            focus:bg-white focus:outline-none"
                   />
-                </defs>
-                <clipPath id="b">
-                  <use xlinkHref="#a" overflow="visible" />
-                </clipPath>
-                <path clipPath="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z" />
-                <path
-                  clipPath="url(#b)"
-                  fill="#EA4335"
-                  d="M0 11l17 13 7-6.1L48 14V0H0z"
-                />
-                <path
-                  clipPath="url(#b)"
-                  fill="#34A853"
-                  d="M0 37l30-23 7.9 1L48 0v48H0z"
-                />
-                <path
-                  clipPath="url(#b)"
-                  fill="#4285F4"
-                  d="M48 48L17 24l-4-3 35-10z"
-                />
-              </svg>
-              <span className="ml-4">Log in with Google</span>
-            </div>
-          </button>
-          {login && (
-            <p className="mt-8">
-              Need an account?{" "}
-              <Link
-                href="/register"
-                className="text-blue-500 hover:text-blue-700 font-semibold"
+                </div>
+              )}
+              {errors.confirmPassword && (
+                <p className="text-red-500">{`${errors.confirmPassword.message}`}</p>
+              )}
+              <div className="text-right mt-2">
+                <a
+                  href="#"
+                  className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700"
+                >
+                  Forgot Password?
+                </a>
+              </div>
+              <button
+                type="submit"
+                className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6"
               >
-                Create an account
-              </Link>
-            </p>
-          )}
+                {login ? "Log In" : "Register"}
+              </button>
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            </form>
+            <hr className="my-6 border-gray-300 w-full" />
+            <button
+              type="button"
+              className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
+            >
+              <div className="flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                  className="w-6 h-6"
+                  viewBox="0 0 48 48"
+                >
+                  <defs>
+                    <path
+                      id="a"
+                      d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"
+                    />
+                  </defs>
+                  <clipPath id="b">
+                    <use xlinkHref="#a" overflow="visible" />
+                  </clipPath>
+                  <path clipPath="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z" />
+                  <path
+                    clipPath="url(#b)"
+                    fill="#EA4335"
+                    d="M0 11l17 13 7-6.1L48 14V0H0z"
+                  />
+                  <path
+                    clipPath="url(#b)"
+                    fill="#34A853"
+                    d="M0 37l30-23 7.9 1L48 0v48H0z"
+                  />
+                  <path
+                    clipPath="url(#b)"
+                    fill="#4285F4"
+                    d="M48 48L17 24l-4-3 35-10z"
+                  />
+                </svg>
+                <span className="ml-4">Log in with Google</span>
+              </div>
+            </button>
+            {login && (
+              <p className="mt-8">
+                Need an account?{" "}
+                <Link
+                  href="/register"
+                  className="text-blue-500 hover:text-blue-700 font-semibold"
+                >
+                  Create an account
+                </Link>
+              </p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

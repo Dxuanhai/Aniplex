@@ -28,21 +28,13 @@ const Scroll = ({ icon, size, classname, Function }: Props) => {
     };
   }, [isScroll]);
 
-  const handleScrollTop = () => {
-    alert("Scroll");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <div
       onClick={Function}
       className={twMerge(
-        "transition-all",
-        "w-[60px]",
-        "h-[60px]",
-        "xl:w-[40px]",
-        "xl:h-[40px]",
-        "flex",
+        "hidden",
+        "w-[40px]",
+        "h-[40px]",
         "items-center",
         "justify-center",
         "text-white",
@@ -54,7 +46,8 @@ const Scroll = ({ icon, size, classname, Function }: Props) => {
         "cursor-pointer",
         "rounded-md",
         "xl:hover:bg-pink-600",
-        isScroll ? "opacity-100" : "opacity-0",
+
+        isScroll ? "xl:flex " : "",
         classname
       )}
     >
