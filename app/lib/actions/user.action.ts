@@ -1,5 +1,6 @@
 import prisma from "../primasdb";
 import bcrypt from "bcrypt";
+import { Iuser } from "../type";
 
 export const getUser = async (userId: number) => {
   try {

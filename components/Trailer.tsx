@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import VideoPlayer from "./VideoPlayer";
 import Title from "./Title";
-import { TrailerType } from "@/app/types/slide_data";
+import { TrailerType } from "@/app/lib/types/slide_data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";

@@ -1,3 +1,13 @@
+import { z } from "zod";
+import { signInSchema } from "./validation";
+
+export type IsignInSchema = z.infer<typeof signInSchema>;
+
+export interface Iuser {
+  email: string;
+  password: string;
+  isAdmin?: boolean;
+}
 export interface SlideData {
   id: number;
   url: string;

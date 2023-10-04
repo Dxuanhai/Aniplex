@@ -10,27 +10,26 @@ interface SlideProps {
 function Slide() {
   const slides: SlideProps[] = [
     {
+      url: "/images/ptJjk2.jpg",
+    },
+    {
       url: "/images/hero2.jpg",
     },
     {
-      url: "/images/hero9.jpg",
+      url: "/images/spyxfamily.jpg",
     },
     {
       url: "/images/hero13.jpg",
     },
     {
-      url: "/images/hero14.jpg",
+      url: "/images/bluelock.jpg",
     },
     {
       url: "/images/hero15.jpg",
     },
-    {
-      url: "/images/hero16.jpg",
-    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [intervalId, setIntervalId] = useState<number | null>(null);
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
@@ -47,9 +46,15 @@ function Slide() {
   const goToSlide = (slideIndex: number) => {
     setCurrentIndex(slideIndex);
   };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   return (
-    <div className="max-w-[1400px]  h-[330px] md:h-[460px] xl:h-[680px] w-full m-auto py-16 px-4 relative group">
+    <div className="max-w-[1400px]  h-[350px] md:h-[460px] xl:h-[760px] w-full m-auto py-16 px-4 relative group">
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         className="w-full h-full rounded-2xl bg-center bg-cover duration-500 relative"

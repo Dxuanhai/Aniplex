@@ -3,9 +3,10 @@ import Link from "next/link";
 import React, { Suspense, useState } from "react";
 import { useForm, type FieldValues, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInSchema, signUpSchema } from "../../app/lib/validations/auth";
+
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { signInSchema, signUpSchema } from "@/app/lib/validation";
 
 interface Props {
   login: boolean;
@@ -72,7 +73,7 @@ const Authform = ({ login }: Props) => {
   return (
     <>
       {loading && (
-        <main className="w-full h-screen flex items-center justify-center absolute opacity-100">
+        <main className="w-full h-screen flex items-center justify-center absolute opacity-60 bg-pink-100 ">
           <span className="loading loading-ring w-[10px]  text-pink-100  absolute"></span>
           <span className="loading loading-ring w-[50px]  text-pink-200 absolute"></span>
           <span className="loading loading-ring w-[100px]  text-pink-300 absolute"></span>
@@ -93,7 +94,7 @@ const Authform = ({ login }: Props) => {
                 : "url('/images/yourLieInApril.jpg')"
             }`,
           }}
-          className="h-[400px] md:h-full md:w-2/3 bg-center bg-no-repeat bg-cover m-6"
+          className="h-[400px] md:h-full md:w-2/3 bg-center bg-no-repeat bg-cover "
         ></div>
         <div className="bg-white w-full md:max-w-md lg:max-w-full  md:mx-0 md:w-1/2 xl:w-1/3 md:h-screen px-6 lg:px-16 xl:px-12 flex items-center justify-center">
           <div className="w-full h-100">

@@ -1,10 +1,19 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import prisma from "../../../lib/primasdb";
+import { IsignInSchema } from "@/app/lib/type";
+import { signInSchema } from "@/app/lib/validation";
 
 export const POST = async (request: Request) => {
   try {
-    const body = await request.json();
+    const body: IsignInSchema = await request.json();
+
+    const parseBody = signInSchema.safeParse(body);
+
+    if (!parseBody.success) {
+      return NextResponse.json(parseBody.error.message, { status: 422 });
+    }
+
     const user = await prisma.user.findUnique({
       where: {
         email: body.email,
