@@ -25,7 +25,7 @@ const Authenticate = ({ children, type }: Props) => {
       }
       setLoading(true);
     }
-  }, [loading]);
+  }, [loading, router, type]);
   return (
     <>
       {loading ? (

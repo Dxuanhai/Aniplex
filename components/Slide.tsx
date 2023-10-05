@@ -51,7 +51,7 @@ function Slide() {
       nextSlide();
     }, 5000);
     return () => clearInterval(interval);
-  }, [currentIndex]);
+  }, [currentIndex, nextSlide]);
 
   return (
     <div className="max-w-[1400px]  h-[350px] md:h-[460px] xl:h-[760px] w-full m-auto py-16 px-4 relative group">
