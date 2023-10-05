@@ -13,12 +13,12 @@ export const POST = async (request: Request) => {
       return NextResponse.json(parseForm.error.message, { status: 422 });
     }
     const userExists = await checkUserExists(body.email);
-    if (userExists) {
+    if (userExists)
       return NextResponse.json(
         { message: "User already exists" },
         { status: 400 }
       );
-    }
+
     const user = await createUser(body);
 
     return NextResponse.json(user);

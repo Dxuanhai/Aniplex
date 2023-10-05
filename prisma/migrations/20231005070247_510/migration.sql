@@ -10,15 +10,6 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "Anime" (
-    "id" SERIAL NOT NULL,
-    "type" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "Anime_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Product" (
     "id" SERIAL NOT NULL,
     "urlImage" TEXT NOT NULL,
@@ -27,9 +18,17 @@ CREATE TABLE "Product" (
     "link" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "animeId" INTEGER NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Anime" (
+    "id" SERIAL NOT NULL,
+    "type" TEXT NOT NULL,
+    "productId" INTEGER NOT NULL,
+
+    CONSTRAINT "Anime_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -48,4 +47,4 @@ CREATE TABLE "Trailer" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_animeId_fkey" FOREIGN KEY ("animeId") REFERENCES "Anime"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Anime" ADD CONSTRAINT "Anime_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

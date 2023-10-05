@@ -16,20 +16,53 @@ export const signInSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-export const productSchema = z.object({
-  urlImage: z.string(),
+export const productFormSchema = z.object({
   title: z.string(),
-  desc: z.string().optional(),
+  desc: z.string().optional().nullable(),
   link: z.string(),
-  type: z.string().refine((value) => ["ANIME", "TOY", "BOX"].includes(value)),
+  type: z.string(),
+  urlImage: z.string(),
+  typeAnime: z.string(),
 });
 
-// id          Int      @id @default(autoincrement())
-// urlImage:    string
-// desc    :    string?
-// title   :    string
-// link    :    string
-// type    :    string       // Loại product (ví dụ: "ANIME","TOY","BOX")
-// createdAt:   DateTime     @default(now())
-// anime :  Anime    @relation(fields: [animeId], references: [id])
-// animeId : Int
+export const productSchema = z.object({
+  id: z.number().int().positive().optional(),
+  productId: z.number().int().positive().optional(),
+  urlImage: z.string(),
+  title: z
+    .string()
+    .refine((value) => value.length > 0, {
+      message: "Title must not be empty",
+    })
+    .refine((value) => typeof value === "string", {
+      message: "Title must be a string",
+    })
+    .refine((value) => /^[A-Z].*$/.test(value), {
+      message: "Title must start with an uppercase letter",
+    }),
+
+  desc: z.string().optional().nullable(),
+  link: z.string().url(),
+  type: z.string().refine((value) => ["ANIME", "TOY", "BOX"].includes(value)),
+  createAt: z.string().optional(),
+  animes: z.array(
+    z.object({
+      type: z
+        .string()
+        .refine((value) =>
+          ["TV", "MOVIE", "GAME", "OTHER", "NONE"].includes(value)
+        ),
+    })
+  ),
+});
+
+export const idSchema = z.object({
+  id: z.number().int().positive(),
+});
+
+export const detailTypeScheme = z
+  .string()
+  .refine((value) => ["ANIME", "TOY", "BOX"].includes(value));
+export const detailTypeAnimeScheme = z
+  .string()
+  .refine((value) => ["TV", "MOVIE", "GAME", "OTHER", "NONE"].includes(value));

@@ -1,8 +1,15 @@
 import { z } from "zod";
-import { productSchema, signInSchema } from "./validation";
+import {
+  detailTypeScheme,
+  idSchema,
+  productSchema,
+  signInSchema,
+} from "./validation";
 
 export type IsignInSchema = z.infer<typeof signInSchema>;
 export type Tproduct = z.infer<typeof productSchema>;
+export type TdetailParam = z.infer<typeof detailTypeScheme>;
+export type Tid = z.infer<typeof idSchema>;
 
 export interface Iuser {
   email: string;
@@ -25,16 +32,3 @@ export interface TrailerType {
   urlImage: string;
   title: string;
 }
-
-// export interface Product {
-//   id          Int      @id @default(autoincrement())
-//   urlImage    String
-//   title       String
-//   desc        String?
-//   link        String
-//   type        String       // Loại product (ví dụ: "ANIME","TOY","BOX")
-//   createdAt   DateTime     @default(now())
-//   anime   Anime    @relation(fields: [animeId], references: [id])
-//   animeId  Int
-
-// }
