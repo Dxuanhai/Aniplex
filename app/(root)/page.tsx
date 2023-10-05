@@ -1,5 +1,9 @@
 import Slide from "@/components/Slide";
 import Section from "@/components/Section";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 136568913a43f480fd27f8d6197005ded82a6016
 import Trailer from "@/components/Trailer";
 import Information from "@/components/Information";
 import { SlideData } from "../lib/type";

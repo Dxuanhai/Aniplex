@@ -10,9 +10,8 @@ export const POST = async (request: Request) => {
 
     const parseBody = signInSchema.safeParse(body);
 
-    if (!parseBody.success) {
+    if (!parseBody.success)
       return NextResponse.json(parseBody.error.message, { status: 422 });
-    }
 
     const user = await prisma.user.findUnique({
       where: {
@@ -20,12 +19,11 @@ export const POST = async (request: Request) => {
       },
     });
 
-    if (!user) {
+    if (!user)
       return NextResponse.json(
-        { message: "Invalid email or password" },
+        { message: "account not exists" },
         { status: 400 }
       );
-    }
 
     const passwordMatch = await bcrypt.compare(body.password, user.password);
     if (!passwordMatch) {
