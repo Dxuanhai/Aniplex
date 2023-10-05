@@ -6,7 +6,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "../app/globals.css";
 import { Navigation, Autoplay, Pagination } from "swiper/modules";
-import { SlideData } from "@/app/lib/types/slide_data";
+import { SlideData } from "@/app/lib/type";
+
 
 interface carouselProps {
   data: SlideData[];

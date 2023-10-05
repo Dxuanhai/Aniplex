@@ -2,8 +2,9 @@
 
 import React, { useRef, useState } from "react";
 import Carousel from "./Carousel";
-import { SlideData } from "@/app/lib/types/slide_data";
+
 import Title from "./Title";
+import { SlideData } from "@/app/lib/type";
 
 interface sectionProps {
   data: SlideData[];

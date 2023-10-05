@@ -1,9 +1,8 @@
 import Slide from "@/components/Slide";
 import Section from "@/components/Section";
-
-import { SlideData } from "../lib/types/slide_data";
 import Trailer from "@/components/Trailer";
 import Information from "@/components/Information";
+import { SlideData } from "../lib/type";
 
 export default function Home() {
   const dataWhatNews: SlideData[] = [
