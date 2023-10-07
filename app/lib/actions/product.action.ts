@@ -1,6 +1,17 @@
 import prisma from "../primasdb";
 import { Tid, Tproduct } from "../type";
 
+export const countProducts = async () => {
+  try {
+    const count = await prisma.product.count();
+    return count;
+  } catch (error) {
+    console.error("Error counting products:", error);
+    throw error;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
 export const fetchProducts = async () => {
   try {
     const products = await prisma.product.findMany({
@@ -16,17 +27,47 @@ export const fetchProducts = async () => {
     throw error;
   }
 };
-export const fetchProductsLimit = async (limit: number) => {
+export const fetchTypeProducts = async (
+  type: string,
+  skip: number,
+  take: number
+) => {
   try {
     const products = await prisma.product.findMany({
+      skip,
+      take,
+      orderBy: {
+        createdAt: "desc",
+      },
+      where: { type },
+      include: {
+        animes: {
+          select: {
+            type: true,
+          },
+        },
+      },
+    });
+    return products;
+  } catch (error) {
+    console.error("Error Fetch Product", error);
+    throw error;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+export const fetchProductsLimit = async (skip: number, take: number) => {
+  try {
+    const products = await prisma.product.findMany({
+      skip,
+      take,
+      orderBy: {
+        createdAt: "desc",
+      },
       include: {
         animes: {
           select: { type: true },
         },
-      },
-      take: limit,
-      orderBy: {
-        createdAt: "desc",
       },
     });
     return products;

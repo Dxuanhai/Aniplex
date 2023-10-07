@@ -6,11 +6,10 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "../app/globals.css";
 import { Navigation, Autoplay, Pagination } from "swiper/modules";
-import { SlideData } from "@/app/lib/type";
-
+import { Tproduct } from "@/app/lib/type";
 
 interface carouselProps {
-  data: SlideData[];
+  data: Tproduct[];
   classname: string;
   breakpoints: any;
   height: any;
@@ -47,13 +46,11 @@ const Carousel: React.FC<carouselProps> = ({
             <a href={item.link} className="h-[70%] w-full block">
               <div
                 className="h-full w-full bg-no-repeat bg-center bg-cover"
-                style={{ backgroundImage: `url(${item.url})` }}
+                style={{ backgroundImage: `url(${item.urlImage})` }}
               ></div>
             </a>
             <div className={`h-[30%] flex  w-full gap-y-2 ${classname}`}>
-              <h3 className="text-[#888888] text-[14px]">
-                {item.desc || item.status}
-              </h3>
+              <h3 className="text-[#888888] text-[14px]">{item?.desc}</h3>
               <span className="text-lg font-bold text-[#444444]">
                 {item.title}
               </span>

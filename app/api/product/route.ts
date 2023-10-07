@@ -12,18 +12,28 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
   const limit = searchParams.get("limit");
+  const skip = searchParams.get("skip");
 
   let products: Tproduct[];
-  if (!limit) {
+  if (!limit || !skip) {
     products = await fetchProducts();
   } else {
     const parsedLimit = parseInt(limit, 10);
-    if (typeof parsedLimit !== "number")
+    const parsedSkip = parseInt(skip, 10);
+    if (typeof parsedLimit !== "number") {
       return NextResponse.json(
         { message: "Invalid parametes" },
         { status: 422 }
       );
-    products = await fetchProductsLimit(parsedLimit);
+    }
+    if (typeof parsedSkip !== "number") {
+      return NextResponse.json(
+        { message: "Invalid parametes" },
+        { status: 422 }
+      );
+    }
+    console.log("Skip ::", parsedSkip);
+    products = await fetchProductsLimit(parsedSkip, parsedLimit);
   }
 
   if (!products) {
