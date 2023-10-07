@@ -21,7 +21,7 @@ import ProductForm from "@/components/form/ProductForm";
 import { toast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 
-const page = () => {
+const Page = () => {
   const [data, setData] = useState<Tproduct[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setLoading] = useState(true);
@@ -201,4 +201,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

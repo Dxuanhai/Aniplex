@@ -7,7 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const page = ({ params }: { params: { slug: string } }) => {
+const Page = ({ params }: { params: { slug: string } }) => {
   const productId = parseInt(params.slug, 10);
   const [data, setData] = useState<Tproduct>({
     title: "",
@@ -44,7 +44,7 @@ const page = ({ params }: { params: { slug: string } }) => {
         setData(data);
         setLoading(false);
       });
-  }, [data, setLoading]);
+  }, [data, setLoading, productId]);
 
   const updateProduct = (data: TproductFormSchema) => {
     if (!isAdmin) {
@@ -107,4 +107,4 @@ const page = ({ params }: { params: { slug: string } }) => {
   );
 };
 
-export default page;
+export default Page;
