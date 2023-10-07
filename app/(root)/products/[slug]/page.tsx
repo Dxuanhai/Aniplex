@@ -3,6 +3,8 @@
 import { Tproduct, TproductFormSchema } from "@/app/lib/type";
 import NotificationCard from "@/components/card/NotificationCard";
 import ProductForm from "@/components/form/ProductForm";
+import { toast } from "@/components/ui/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -67,9 +69,16 @@ const Page = ({ params }: { params: { slug: string } }) => {
       })
       .then((res) => {
         router.push("/products");
+        return true;
       })
-      .catch((err) => console.log(err));
-    return;
+      .catch((err) => {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: `${err.message}`,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+        return false;
+      });
   };
   return (
     <>

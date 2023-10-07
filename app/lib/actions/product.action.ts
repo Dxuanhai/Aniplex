@@ -3,14 +3,33 @@ import { Tid, Tproduct } from "../type";
 
 export const fetchProducts = async () => {
   try {
-    const product = await prisma.product.findMany({
+    const products = await prisma.product.findMany({
       include: {
         animes: {
           select: { type: true },
         },
       },
     });
-    return product;
+    return products;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error;
+  }
+};
+export const fetchProductsLimit = async (limit: number) => {
+  try {
+    const products = await prisma.product.findMany({
+      include: {
+        animes: {
+          select: { type: true },
+        },
+      },
+      take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return products;
   } catch (error) {
     console.error("Error creating user:", error);
     throw error;
