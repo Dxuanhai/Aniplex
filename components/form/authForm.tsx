@@ -51,7 +51,7 @@ const Authform = ({ login }: Props) => {
       .then((res) => {
         setLoading(false);
         if (res?.data) {
-          localStorage.setItem("userLogin", JSON.stringify(data.email));
+          localStorage.setItem("userLogin", data.email);
 
           router.push("/");
         }

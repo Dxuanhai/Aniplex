@@ -2,12 +2,14 @@ import { z } from "zod";
 import {
   detailTypeScheme,
   idSchema,
+  productFormSchema,
   productSchema,
   signInSchema,
 } from "./validation";
 
 export type IsignInSchema = z.infer<typeof signInSchema>;
 export type Tproduct = z.infer<typeof productSchema>;
+export type TproductFormSchema = z.infer<typeof productFormSchema>;
 export type TdetailParam = z.infer<typeof detailTypeScheme>;
 export type Tid = z.infer<typeof idSchema>;
 

@@ -1,12 +1,12 @@
 import "../globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
 import Authenticate from "@/components/shared/Authenticate";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -19,9 +19,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
-  const isUserLogin = cookieStore.get("userLogin");
-
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
@@ -30,6 +27,7 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
+            <Toaster />
           </Authenticate>
         </Suspense>
       </body>
