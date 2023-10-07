@@ -28,7 +28,7 @@ interface Props {
   product?: Tproduct;
   typeSubmit: string;
   classname?: string;
-  handleSubmit: (data: TproductFormSchema) => void;
+  handleSubmit: (data: TproductFormSchema) => boolean | void;
 }
 
 const ProductForm = ({
@@ -51,6 +51,7 @@ const ProductForm = ({
 
   function onSubmit(data: z.infer<typeof productFormSchema>) {
     handleSubmit(data);
+    if (!handleSubmit(data)) return;
     form.reset();
   }
   return (

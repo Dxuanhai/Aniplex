@@ -65,15 +65,16 @@ const Page = () => {
         toast({
           description: "Created Success",
         });
+        return true;
       })
       .catch((err) => {
-        console.log(err);
         toast({
           title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request.",
+          description: `${err.message}`,
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         });
       });
+    return false;
   };
   const handleClode = () => {
     setToggle(false);
