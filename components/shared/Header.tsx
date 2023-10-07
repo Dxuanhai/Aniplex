@@ -53,58 +53,21 @@ const Header = () => {
         Function={handleLogout}
         classname="flex"
       />
-      <div
-        className="
-        
-        "
-      >
-        <div
-          className="
-            border
-            border-solid
-            h-[40px]
-            "
-        >
-          <div
-            className="
-                container
-                mx-auto
-                2xl:w-[1280px]
-                px-4
-                "
-          >
+      <div className=" ">
+        <div className="border border-solid h-[40px] ">
+          <div className="container mx-auto 2xl:w-[1280px]">
             <Brand />
           </div>
         </div>
         <div
-          className={`bg-white w-full h-[100px] ${
-            isFixed ? "fixed top-0 z-[100] h-[60px] " : ""
-          } border-b-2  transition-all`}
+          className={`bg-white w-full  h-[100px] flex justify-center  
+           ${
+             isFixed ? "fixed top-0 z-[100] h-[60px] w-screen " : ""
+           } border-b-2  transition-all`}
         >
-          <div
-            className="
-            container
-            mx-auto
-            2xl:w-[1280px]
-            px-4
-          
-          "
-          >
-            <div
-              className="
-              flex
-              items-center
-              w-full
-              md:justify-between
-              "
-            >
-              <button
-                onClick={ShowMenu}
-                className="
-              md:hidden
-              
-              "
-              >
+          <div className=" container 2xl:w-[1280px]">
+            <div className="flex items-center w-full md:justify-between">
+              <button onClick={ShowMenu} className="md:hidden ">
                 <BiMenu size={24} />
               </button>
               <Link href="/" className="mx-auto md:mx-0 ">
@@ -121,7 +84,6 @@ const Header = () => {
                 hidden
                 md:flex
                 items-center
-                
                 text-main
                 h-full
                 "
@@ -136,7 +98,7 @@ const Header = () => {
                   <Link href="/shows">SHOWS</Link>
                 </li>
                 <li className="font-bold hover:text-pink-500 px-4 flex items-center justify-center  hover:border-b-[8px] hover:border-pink-500 h-full transition-all ">
-                  <Link href="https://store.aniplexusa.com/">SHOP</Link>
+                  <Link href="/products">PRODUCTS</Link>
                 </li>
               </ul>
             </div>

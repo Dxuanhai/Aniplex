@@ -1,4 +1,3 @@
-
 import {
   BiLogoFacebook,
   BiLogoTwitter,
@@ -16,6 +15,7 @@ const Brand = () => {
       xl:justify-end
       h-[40px] 
       text-main
+      w-full
     "
     >
       <a
