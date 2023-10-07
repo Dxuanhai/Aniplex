@@ -4,10 +4,10 @@ import React, { useRef, useState } from "react";
 import Carousel from "./Carousel";
 
 import Title from "./Title";
-import { SlideData } from "@/app/lib/type";
+import { Tproduct } from "@/app/lib/type";
 
 interface sectionProps {
-  data: SlideData[];
+  data: Tproduct[];
   title: string;
   classname: string;
   breakpoints: any;

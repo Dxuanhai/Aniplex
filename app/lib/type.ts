@@ -18,14 +18,15 @@ export interface Iuser {
   password: string;
   isAdmin?: boolean;
 }
-export interface SlideData {
-  id: number;
-  url: string;
-  title: string;
-  desc?: string;
-  status?: string;
-  link: string;
-}
+// export interface SlideData {
+//   id: number;
+//   urlImage: string;
+//   title: string;
+//   desc: string | null;
+//   link: string;
+//   type: string;
+//   createdAt?: Date;
+// }
 
 export interface TrailerType {
   id: number;
