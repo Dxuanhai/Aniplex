@@ -2,6 +2,7 @@ import {
   createProduct,
   deleteProduct,
   fetchProducts,
+  fetchProductsLimit,
   updateProduct,
 } from "@/app/lib/actions/product.action";
 import { Tid, Tproduct } from "@/app/lib/type";
