@@ -42,7 +42,7 @@ const Scroll = ({ icon, size, classname, Function }: Props) => {
         "fixed",
         "right-4",
         "bottom-[40px]",
-        "z-50",
+        "z-[999]",
         "cursor-pointer",
         "rounded-md",
         "xl:hover:bg-pink-600",

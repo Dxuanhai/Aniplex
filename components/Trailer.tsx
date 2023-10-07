@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import VideoPlayer from "./VideoPlayer";
 import Title from "./Title";
-import { TrailerType } from "@/app/lib/types/slide_data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -10,6 +9,7 @@ import "swiper/css/pagination";
 import "../app/globals.css";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { AiOutlineClose } from "react-icons/ai";
+import { TrailerType } from "@/app/lib/type";
 
 const Trailer = () => {
   const TrailerData: TrailerType[] = [

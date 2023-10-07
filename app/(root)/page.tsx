@@ -1,6 +1,5 @@
 import Slide from "@/components/Slide";
 import Section from "@/components/Section";
-
 import Trailer from "@/components/Trailer";
 import Information from "@/components/Information";
 import { SlideData } from "../lib/type";

@@ -17,9 +17,19 @@ export const signInSchema = z.object({
 });
 
 export const productFormSchema = z.object({
-  title: z.string(),
+  title: z
+    .string()
+    .refine((value) => value.length > 0, {
+      message: "Title must not be empty",
+    })
+    .refine((value) => typeof value === "string", {
+      message: "Title must be a string",
+    })
+    .refine((value) => /^[A-Z].*$/.test(value), {
+      message: "Title must start with an uppercase letter",
+    }),
   desc: z.string().optional().nullable(),
-  link: z.string(),
+  link: z.string().url(),
   type: z.string(),
   urlImage: z.string(),
   typeAnime: z.string(),

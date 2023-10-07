@@ -2,9 +2,9 @@
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { productFormSchema, productSchema } from "@/app/lib/validation";
+import { productFormSchema } from "@/app/lib/validation";
 import { z } from "zod";
-import { Tproduct } from "@/app/lib/type";
+import { Tproduct, TproductFormSchema } from "@/app/lib/type";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,11 +22,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "../ui/use-toast";
+import { twMerge } from "tailwind-merge";
 
-const ProductForm = ({ product }: { product: Tproduct }) => {
+interface Props {
+  product?: Tproduct;
+  typeSubmit: string;
+  classname?: string;
+  handleSubmit: (data: TproductFormSchema) => void;
+}
+
+const ProductForm = ({
+  product,
+  typeSubmit,
+  classname,
+  handleSubmit,
+}: Props) => {
   const form = useForm({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(productFormSchema),
     defaultValues: {
       title: product?.title || "",
       desc: product?.desc || "",
@@ -36,123 +48,138 @@ const ProductForm = ({ product }: { product: Tproduct }) => {
       typeAnime: product?.animes[0].type || "",
     },
   });
+
   function onSubmit(data: z.infer<typeof productFormSchema>) {
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
+    handleSubmit(data);
     form.reset();
   }
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="grid grid-cols-2 gap-8 "
-      >
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>This is your product title.</FormDescription>
-              <FormMessage />
-            </FormItem>
+    <>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={twMerge(
+            "grid",
+            "grid-cols-1",
+            "md:grid-cols-2",
+            "gap-8",
+            "w-full",
+            "md:w-[600px]",
+            "xl:w-[1000px]",
+            "px-4",
+            "relative",
+            "bg-white",
+            classname
           )}
-        />
-        <FormField
-          control={form.control}
-          name="desc"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="link"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="/" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="urlImage"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FormControl>
-                <Input placeholder="/" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="type"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Type</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+        >
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select something" />
-                  </SelectTrigger>
+                  <Input type="text" placeholder="title" {...field} />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="ANIME">ANIME</SelectItem>
-                  <SelectItem value="TOY">TOY</SelectItem>
-                  <SelectItem value="BOX">BOX</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="typeAnime"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Type Anime</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="desc"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select something" />
-                  </SelectTrigger>
+                  <Input placeholder="desc" {...field} />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="TV">TV</SelectItem>
-                  <SelectItem value="MOVIE">MOVIE</SelectItem>
-                  <SelectItem value="GAME">GAME</SelectItem>
-                  <SelectItem value="OTHER">OTHER</SelectItem>
-                  <SelectItem value="NONE">NONE</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="link"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Link</FormLabel>
+                <FormControl>
+                  <Input type="text" placeholder="http or https" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="urlImage"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Image</FormLabel>
+                <FormControl>
+                  <Input type="text" placeholder="/" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select something" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="ANIME">ANIME</SelectItem>
+                    <SelectItem value="TOY">TOY</SelectItem>
+                    <SelectItem value="BOX">BOX</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="typeAnime"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Type Anime</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select something" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="TV">TV</SelectItem>
+                    <SelectItem value="MOVIE">MOVIE</SelectItem>
+                    <SelectItem value="GAME">GAME</SelectItem>
+                    <SelectItem value="OTHER">OTHER</SelectItem>
+                    <SelectItem value="NONE">NONE</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
+          <Button className="md:translate-x-[55%] my-2  " type="submit">
+            {typeSubmit}
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 };
 

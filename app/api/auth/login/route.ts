@@ -33,7 +33,7 @@ export const POST = async (request: Request) => {
       );
     }
 
-    return NextResponse.json(user);
+    return NextResponse.json({ message: "login successful" }, { status: 200 });
   } catch (error) {
     console.error("Error retrieving user:", error);
     throw error;
