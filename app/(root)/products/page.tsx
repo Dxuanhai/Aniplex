@@ -27,7 +27,8 @@ const Page = () => {
   const page = searchParams.get("page") ?? "1";
   const perPage = searchParams.get("per_page") ?? "5";
   const start = (Number(page) - 1) * Number(perPage);
-  const end = start + Number(perPage);
+  const end = Number(perPage);
+  console.log("STAT : ", start, "END : ", end);
   const handleDelete = (id?: number) => {
     if (!isAdmin) {
       setToggle(true);
@@ -66,7 +67,7 @@ const Page = () => {
         toast({
           description: "Created Success",
         });
-        setData((prevData) => [...prevData, res.data]);
+        setData((preData) => [...preData, res.data]);
         return true;
       })
       .catch((err) => {
@@ -101,13 +102,13 @@ const Page = () => {
     fetch(`/api/product?skip=${start}&limit=${end}`)
       .then((res) => res?.json())
       .then((res) => {
+        setIsLoading(false);
         if (JSON.stringify(res) !== JSON.stringify(data)) {
           setData(res);
-          setIsLoading(false);
         }
       })
       .catch((err) => err.message);
-  }, [start, end]);
+  }, [start, end, data]);
 
   useEffect(() => {
     fetch(`/api/product/count`)
@@ -141,7 +142,7 @@ const Page = () => {
               <section className="w-full h-screen absolute flex justify-center items-center z-10 ">
                 <ProductForm
                   typeSubmit="Create"
-                  classname="p-8 rounded-xl border-2 border-slate-800 -mt-[20%]"
+                  classname="p-8 rounded-xl border-2 border-slate-800 -mt-[10%]"
                   handleSubmit={createProduct}
                 />
               </section>
@@ -149,7 +150,7 @@ const Page = () => {
             <TableProduct data={data} Delete={handleDelete} />
             <div className="w-full flex justify-center items-center my-4">
               <Pagination
-                hasNextPage={end < count}
+                hasNextPage={start + end < count}
                 currentPage={page}
                 hasPrevPage={start > 0}
               />
