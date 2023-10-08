@@ -7,7 +7,6 @@ export const GET = async (request: NextRequest) => {
   const type = searchParams.get("type");
   const typeAnime = searchParams.get("typeAnime");
 
-  console.log(typeAnime);
   if (typeof type !== "string") {
     return new NextResponse(
       JSON.stringify({ message: "Invalid parameter type" }),
@@ -24,7 +23,6 @@ export const GET = async (request: NextRequest) => {
   const checkTypeAnime = detailTypeAnimeScheme.safeParse(
     typeAnime?.toUpperCase()
   );
-  console.log(checkTypeAnime);
   if (!checkType.success)
     return new NextResponse(
       JSON.stringify({

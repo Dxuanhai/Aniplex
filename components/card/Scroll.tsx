@@ -20,7 +20,6 @@ const Scroll = ({ icon, size, classname, Function }: Props) => {
         setIsScroll(false);
       }
     }
-    console.log(isScroll);
     window.addEventListener("scroll", handleScroll);
 
     return () => {

@@ -33,6 +33,7 @@ export const productFormSchema = z.object({
   type: z.string(),
   urlImage: z.string(),
   typeAnime: z.string(),
+  path: z.string().optional(),
 });
 
 export const productSchema = z.object({
