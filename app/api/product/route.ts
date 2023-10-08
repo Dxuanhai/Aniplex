@@ -32,7 +32,6 @@ export const GET = async (request: NextRequest) => {
         { status: 422 }
       );
     }
-    console.log("Skip ::", parsedSkip);
     products = await fetchProductsLimit(parsedSkip, parsedLimit);
   }
 

@@ -51,7 +51,6 @@ const ProductForm = ({
 
   function onSubmit(data: z.infer<typeof productFormSchema>) {
     handleSubmit(data);
-    if (!handleSubmit(data)) return;
     form.reset();
   }
   return (
