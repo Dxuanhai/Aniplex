@@ -12,23 +12,30 @@ import { ToastAction } from "@radix-ui/react-toast";
 import Pagination from "@/components/card/Pagination";
 import { useSearchParams } from "next/navigation";
 import Loading from "../loading";
+import useSWR, { useSWRConfig } from "swr";
 import TableProduct from "@/components/shared/TableProduct";
 
 const Page = () => {
+  const { mutate } = useSWRConfig();
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
   const [isAdmin, setIsAdmin] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [isOpenForm, setIsOpenForm] = useState(false);
-  const [data, setData] = useState<Tproduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(0);
-
   const searchParams = useSearchParams();
-
   const page = searchParams.get("page") ?? "1";
   const perPage = searchParams.get("per_page") ?? "5";
   const start = (Number(page) - 1) * Number(perPage);
   const end = Number(perPage);
-  console.log("STAT : ", start, "END : ", end);
+
+  const { data, error, isLoading } = useSWR(
+    `/api/product?skip=${start}&limit=${end}`,
+    fetcher
+  );
+  if (error) {
+    console.log("err::", error);
+  }
   const handleDelete = (id?: number) => {
     if (!isAdmin) {
       setToggle(true);
@@ -40,7 +47,7 @@ const Page = () => {
         toast({
           description: "Delete success.",
         });
-        setData((prevData) => prevData.filter((item) => item.id !== id));
+        mutate(`/api/product?skip=${start}&limit=${end}`);
       })
       .catch((err) => err.message);
     return;
@@ -67,8 +74,7 @@ const Page = () => {
         toast({
           description: "Created Success",
         });
-        setData((preData) => [...preData, res.data]);
-        return true;
+        mutate(`/api/product?skip=${start}&limit=${end}`);
       })
       .catch((err) => {
         toast({
@@ -77,7 +83,6 @@ const Page = () => {
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         });
       });
-    return false;
   };
   const handleClode = () => {
     setToggle(false);
@@ -98,19 +103,6 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch(`/api/product?skip=${start}&limit=${end}`)
-      .then((res) => res?.json())
-      .then((res) => {
-        setIsLoading(false);
-        if (JSON.stringify(res) !== JSON.stringify(data)) {
-          setData(res);
-        }
-      })
-      .catch((err) => err.message);
-  }, [start, end, data]);
-
-  useEffect(() => {
     fetch(`/api/product/count`)
       .then((res) => res?.json())
       .then((data) => {
@@ -127,6 +119,12 @@ const Page = () => {
         <Loading />
       ) : (
         <>
+          {error &&
+            toast({
+              title: "Uh oh! Something went wrong.",
+              description: `${error.message}`,
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            })}
           <main className="xl:hidden">
             This site does not support screens below 1280px
           </main>

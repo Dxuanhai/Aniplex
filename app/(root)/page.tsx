@@ -5,9 +5,9 @@ import Information from "@/components/Information";
 import { fetchTypeProducts } from "../lib/actions/product.action";
 
 export default async function Home() {
-  const dataANIME = await fetchTypeProducts("ANIME", 0, 10);
-  const dataTOY = await fetchTypeProducts("TOY", 0, 10);
-  const dataBOX = await fetchTypeProducts("BOX", 0, 10);
+  const dataANIME = await fetchTypeProducts("ANIME", 0, 10, "TV");
+  const dataTOY = await fetchTypeProducts("TOY", 0, 10, "NONE");
+  const dataBOX = await fetchTypeProducts("BOX", 0, 10, "NONE");
 
   const breakpoints1 = {
     320: {
