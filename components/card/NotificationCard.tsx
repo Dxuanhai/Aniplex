@@ -12,7 +12,7 @@ const NotificationCard = ({ isOpen, handleToggle }: Props) => {
   return (
     <>
       {isOpen ? (
-        <main className="fixed z-10 w-full h-screen flex items-center justify-center ">
+        <main className="fixed z-[999] w-full h-screen flex items-center justify-center ">
           <div className="w-[90%] xl:w-[50%] h-[60%] xl:h-[40%]  border-[4px] border-blue-300 rounded-full overflow-hidden -mt-[20%] shadow-lg shadow-blue-700">
             <div className="flex h-full bg-white justify-end">
               <div className="w-[70%] h-full flex flex-col items-end justify-center gap-y-8">

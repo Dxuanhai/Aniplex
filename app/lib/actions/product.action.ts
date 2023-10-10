@@ -28,7 +28,8 @@ export const fetchProducts = async () => {
 export const fetchTypeProducts = async (
   type: string,
   skip: number,
-  take: number
+  take: number,
+  typeAnime: string
 ) => {
   try {
     const products = await prisma.product.findMany({
@@ -37,12 +38,17 @@ export const fetchTypeProducts = async (
       orderBy: {
         createdAt: "desc",
       },
-      where: { type },
+      where: {
+        type,
+        animes: {
+          some: {
+            type: typeAnime,
+          },
+        },
+      },
       include: {
         animes: {
-          select: {
-            type: true,
-          },
+          select: { type: true },
         },
       },
     });
@@ -97,7 +103,7 @@ export const sortProduct = async (type: string, typeAnime: string) => {
     throw error;
   }
 };
-export const createProduct = async (data: Tproduct, path?: string) => {
+export const createProduct = async (data: Tproduct) => {
   try {
     await prisma.product.create({
       data: {
@@ -109,7 +115,6 @@ export const createProduct = async (data: Tproduct, path?: string) => {
         animes: { create: { type: data.animes[0].type } },
       },
     });
-    if (path) revalidatePath(path);
     return { message: "created product successfully", status: 200 };
   } catch (error) {
     console.error("Error creating user:", error);
