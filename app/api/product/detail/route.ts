@@ -1,3 +1,4 @@
+import prisma from "../../../lib/primasdb";
 import { sortProduct } from "@/app/lib/actions/product.action";
 import { detailTypeAnimeScheme, detailTypeScheme } from "@/app/lib/validation";
 import { NextRequest, NextResponse } from "next/server";
@@ -7,7 +8,35 @@ export const GET = async (request: NextRequest) => {
   const type = searchParams.get("type");
   const typeAnime = searchParams.get("typeAnime");
 
-  console.log(typeAnime);
+  if (!typeAnime && type) {
+    if (typeof type !== "string") {
+      return new NextResponse(
+        JSON.stringify({ message: "Invalid parameter type" }),
+        { status: 400 }
+      );
+    }
+    const products = await prisma.product.findMany({
+      where: { type },
+      include: {
+        animes: {
+          select: { type: true },
+        },
+      },
+      orderBy: {
+        title: "asc",
+      },
+    });
+    if (!products) {
+      return new NextResponse(
+        JSON.stringify({ message: "ERROR FROM SERVER " }),
+        {
+          status: 500,
+        }
+      );
+    }
+    return new NextResponse(JSON.stringify(products));
+  }
+
   if (typeof type !== "string") {
     return new NextResponse(
       JSON.stringify({ message: "Invalid parameter type" }),
@@ -24,7 +53,6 @@ export const GET = async (request: NextRequest) => {
   const checkTypeAnime = detailTypeAnimeScheme.safeParse(
     typeAnime?.toUpperCase()
   );
-  console.log(checkTypeAnime);
   if (!checkType.success)
     return new NextResponse(
       JSON.stringify({
@@ -39,14 +67,14 @@ export const GET = async (request: NextRequest) => {
       }),
       { status: 422 }
     );
-  const product = await sortProduct(
+  const products = await sortProduct(
     type.toUpperCase(),
     typeAnime.toUpperCase()
   );
-  if (!product) {
+  if (!products) {
     return new NextResponse(JSON.stringify({ message: "ERROR FROM SERVER " }), {
       status: 500,
     });
   }
-  return new NextResponse(JSON.stringify(product));
+  return new NextResponse(JSON.stringify(products));
 };

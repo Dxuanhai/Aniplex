@@ -1,16 +1,80 @@
+import { revalidatePath } from "next/cache";
 import prisma from "../primasdb";
 import { Tid, Tproduct } from "../type";
 
+export const countProducts = async () => {
+  try {
+    const count = await prisma.product.count();
+    return count;
+  } catch (error) {
+    return error;
+  }
+};
 export const fetchProducts = async () => {
   try {
-    const product = await prisma.product.findMany({
+    const products = await prisma.product.findMany({
       include: {
         animes: {
           select: { type: true },
         },
       },
     });
-    return product;
+    return products;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error;
+  }
+};
+export const fetchTypeProducts = async (
+  type: string,
+  skip: number,
+  take: number,
+  typeAnime: string
+) => {
+  try {
+    const products = await prisma.product.findMany({
+      skip,
+      take,
+      orderBy: {
+        createdAt: "desc",
+      },
+      where: {
+        type,
+        animes: {
+          some: {
+            type: typeAnime,
+          },
+        },
+      },
+      include: {
+        animes: {
+          select: { type: true },
+        },
+      },
+    });
+    return products;
+  } catch (error) {
+    console.error("Error Fetch Product", error);
+    throw error;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+export const fetchProductsLimit = async (skip: number, take: number) => {
+  try {
+    const products = await prisma.product.findMany({
+      skip,
+      take,
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        animes: {
+          select: { type: true },
+        },
+      },
+    });
+    return products;
   } catch (error) {
     console.error("Error creating user:", error);
     throw error;
@@ -51,7 +115,6 @@ export const createProduct = async (data: Tproduct) => {
         animes: { create: { type: data.animes[0].type } },
       },
     });
-
     return { message: "created product successfully", status: 200 };
   } catch (error) {
     console.error("Error creating user:", error);
@@ -92,7 +155,7 @@ export const updateProduct = async (newData: Tproduct) => {
   }
 };
 
-export const deleteProduct = async (data: Tid) => {
+export const deleteProduct = async (data: Tid, path?: string) => {
   try {
     const existingProduct = await prisma.product.findUnique({
       where: {
@@ -112,6 +175,7 @@ export const deleteProduct = async (data: Tid) => {
         id: data.id,
       },
     });
+    if (path) revalidatePath(path);
     return { message: "Product deleted successfully", status: 200 };
   } catch (error) {
     console.error("Error delete product:", error);

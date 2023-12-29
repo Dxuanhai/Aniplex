@@ -2,44 +2,53 @@
 import { Tproduct, TproductFormSchema } from "@/app/lib/type";
 import NotificationCard from "@/components/card/NotificationCard";
 import Scroll from "@/components/card/Scroll";
-import { Button } from "@/components/ui/button";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { MdCancel } from "react-icons/md";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import axios from "axios";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProductForm from "@/components/form/ProductForm";
 import { toast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
+import { ToastAction } from "@radix-ui/react-toast";
+import Pagination from "@/components/card/Pagination";
+import { useSearchParams } from "next/navigation";
+import Loading from "../loading";
+import useSWR, { useSWRConfig } from "swr";
+import TableProduct from "@/components/shared/TableProduct";
 
 const Page = () => {
-  const [data, setData] = useState<Tproduct[]>([]);
+  const { mutate } = useSWRConfig();
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoading, setLoading] = useState(true);
   const [toggle, setToggle] = useState(false);
   const [isOpenForm, setIsOpenForm] = useState(false);
+  const [count, setCount] = useState(0);
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page") ?? "1";
+  const perPage = searchParams.get("per_page") ?? "5";
+  const start = (Number(page) - 1) * Number(perPage);
+  const end = Number(perPage);
 
-  const handleDelete = (id: number | undefined) => {
+  const { data, error, isLoading } = useSWR(
+    `/api/product?skip=${start}&limit=${end}`,
+    fetcher
+  );
+  if (error) {
+    console.log("err::", error);
+  }
+  const handleDelete = (id?: number) => {
     if (!isAdmin) {
       setToggle(true);
       return;
     }
     axios
       .delete("/api/product", { data: { id } })
-      .then((res) =>
+      .then((res) => {
         toast({
           description: "Delete success.",
-        })
-      )
+        });
+        mutate(`/api/product?skip=${start}&limit=${end}`);
+      })
       .catch((err) => err.message);
     return;
   };
@@ -65,12 +74,12 @@ const Page = () => {
         toast({
           description: "Created Success",
         });
+        mutate(`/api/product?skip=${start}&limit=${end}`);
       })
       .catch((err) => {
-        console.log(err);
         toast({
           title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request.",
+          description: `${err.message}`,
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         });
       });
@@ -91,31 +100,31 @@ const Page = () => {
         })
         .catch((err) => err.message);
     }
-    console.log("check admin Page::", isAdmin);
-  }, [isAdmin, toggle]);
+  }, []);
 
   useEffect(() => {
-    fetch(`/api/product`)
+    fetch(`/api/product/count`)
       .then((res) => res?.json())
       .then((data) => {
-        setData(data);
-        setLoading(false);
+        if (data !== count) {
+          setCount(data);
+        }
       })
       .catch((err) => err.message);
-  }, [data, setLoading]);
+  }, [count]);
 
   return (
     <>
       {isLoading ? (
-        <main className="w-full h-screen flex items-center justify-center relative">
-          <span className="loading loading-ring w-[10px]  text-pink-100  absolute"></span>
-          <span className="loading loading-ring w-[50px]  text-pink-200 absolute"></span>
-          <span className="loading loading-ring w-[100px]  text-pink-300 absolute"></span>
-          <span className="loading loading-ring w-[200px] text-pink-400 absolute "></span>
-          <span className="loading loading-ring w-[400px] text-pink-500 absolute "></span>
-        </main>
+        <Loading />
       ) : (
         <>
+          {error &&
+            toast({
+              title: "Uh oh! Something went wrong.",
+              description: `${error.message}`,
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            })}
           <main className="xl:hidden">
             This site does not support screens below 1280px
           </main>
@@ -131,69 +140,19 @@ const Page = () => {
               <section className="w-full h-screen absolute flex justify-center items-center z-10 ">
                 <ProductForm
                   typeSubmit="Create"
-                  classname="p-8 rounded-xl border-2 border-slate-800 -mt-[20%]"
+                  classname="p-8 rounded-xl border-2 border-slate-800 -mt-[10%]"
                   handleSubmit={createProduct}
                 />
               </section>
             )}
-            <Table className={`hidden xl:block ${toggle ? "opacity-30" : ""}`}>
-              <TableCaption>@xuanhaibaka as hasoul</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[15%] font-bold text-2xl">
-                    Title
-                  </TableHead>
-                  <TableHead className="w-[15%] font-bold text-xl">
-                    Image
-                  </TableHead>
-                  <TableHead className="w-[20%] font-bold text-xl">
-                    Description
-                  </TableHead>
-                  <TableHead className="w-[8%] font-bold text-xl">
-                    Type
-                  </TableHead>
-                  <TableHead className="w-[12%] font-bold text-xl">
-                    Type Anime
-                  </TableHead>
-                  <TableHead className="w-[15%] font-bold text-xl">
-                    Link
-                  </TableHead>
-                  <TableHead className="text-right w-[15%] font-bold text-xl">
-                    Action
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell className="text-[#444444] font-bold text-xl">
-                      {item.title}
-                    </TableCell>
-                    <TableCell>
-                      <div
-                        className="w-full h-[200px] md:h-[300px] bg-center bg-no-repeat bg-cover"
-                        style={{ backgroundImage: `url(${item.urlImage})` }}
-                      ></div>
-                    </TableCell>
-                    <TableCell>{item.desc}</TableCell>
-                    <TableCell>{item.type}</TableCell>
-                    <TableCell>{item.animes[0].type}</TableCell>
-                    <TableCell className="break-all">{item.link}</TableCell>
-                    <TableCell className="text-right space-x-2">
-                      <Button>
-                        <Link href={`/products/${item.id}`}>Update</Link>
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        onClick={() => handleDelete(item.id)}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <TableProduct data={data} Delete={handleDelete} />
+            <div className="w-full flex justify-center items-center my-4">
+              <Pagination
+                hasNextPage={start + end < count}
+                currentPage={page}
+                hasPrevPage={start > 0}
+              />
+            </div>
           </main>
         </>
       )}

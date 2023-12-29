@@ -28,7 +28,7 @@ interface Props {
   product?: Tproduct;
   typeSubmit: string;
   classname?: string;
-  handleSubmit: (data: TproductFormSchema) => void;
+  handleSubmit: (data: TproductFormSchema) => boolean | void;
 }
 
 const ProductForm = ({
@@ -130,16 +130,13 @@ const ProductForm = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Type</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select something" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent {...field}>
                     <SelectItem value="ANIME">ANIME</SelectItem>
                     <SelectItem value="TOY">TOY</SelectItem>
                     <SelectItem value="BOX">BOX</SelectItem>
@@ -154,16 +151,13 @@ const ProductForm = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Type Anime</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select something" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent {...field}>
                     <SelectItem value="TV">TV</SelectItem>
                     <SelectItem value="MOVIE">MOVIE</SelectItem>
                     <SelectItem value="GAME">GAME</SelectItem>
